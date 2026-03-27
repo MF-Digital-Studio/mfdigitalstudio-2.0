@@ -9,7 +9,7 @@ const marqueeItems = [
 
 export function Marquee() {
   return (
-    <div className="bg-gradient-to-r from-electric-blue via-vibrant-purple to-electric-blue py-5 -rotate-3 overflow-hidden">
+    <div className="bg-gradient-to-r from-electric-blue via-vibrant-purple to-electric-blue py-5 rotate-0 md:-rotate-3 overflow-hidden">
       <div className="flex whitespace-nowrap w-max animate-marquee">
         {/* First set of items */}
         <div className="flex items-center">

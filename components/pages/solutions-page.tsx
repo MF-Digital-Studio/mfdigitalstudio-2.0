@@ -155,7 +155,7 @@ export function SolutionsPage() {
                         <motion.p layoutId={`desc-${card.id}`} className="text-white/90 text-lg md:text-xl leading-relaxed mb-8 max-w-xl">
                           {card.description}
                         </motion.p>
-                        <motion.ul layoutId={`features-${card.id}`} className="flex flex-wrap gap-3">
+                        <motion.ul layoutId={`features-${card.id}`} className="hidden flex-wrap gap-3 md:flex">
                           {card.features.map((f) => (
                             <li
                               key={f}
@@ -185,6 +185,16 @@ export function SolutionsPage() {
                       <h4 className="font-display text-2xl md:text-3xl font-bold text-white mb-6 pr-16">
                         Hizmet Detayları
                       </h4>
+                      <ul className="mb-6 flex flex-wrap gap-2 md:hidden">
+                        {card.features.map((f) => (
+                          <li
+                            key={`mobile-${f}`}
+                            className="px-3 py-1 rounded-full bg-white/15 text-white text-xs font-medium"
+                          >
+                            {f}
+                          </li>
+                        ))}
+                      </ul>
                       <div className="text-white/70 space-y-4 text-base md:text-lg leading-relaxed">
                         <p>
                           Buraya <strong>{card.title}</strong> hizmetimiz hakkında çok daha kapsamlı, teknik detaylar, süreç aşamaları, başarı hikayeleri ve müşteri faydalarını içeren detaylı bir açıklama gelecek. Bu alan {card.title} ile müşterilerimizin dijital varlığını nasıl dönüştürdüğümüzü detaylandırmak için tasarlanmıştır.

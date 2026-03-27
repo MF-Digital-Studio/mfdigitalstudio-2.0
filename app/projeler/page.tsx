@@ -266,7 +266,7 @@ function CategorySlider({ category, projects }: { category: Project["category"];
                 className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 [scrollbar-width:none] md:gap-8 [&::-webkit-scrollbar]:hidden"
             >
                 {projects.map((project) => (
-                    <div key={project.id} className="w-[84vw] min-w-[84vw] snap-start md:w-lg md:min-w-lg">
+                    <div key={project.id} className="w-[84vw] min-w-[84vw] snap-start md:w-[48vw] md:min-w-[48vw] lg:w-[calc((100%-4rem)/3)] lg:min-w-[calc((100%-4rem)/3)]">
                         <ProjectCard project={project} />
                     </div>
                 ))}
