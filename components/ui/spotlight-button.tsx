@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
+import type { CSSProperties, MouseEvent as ReactMouseEvent } from "react";
 import Link from "next/link";
 
 interface SpotlightButtonProps {
@@ -12,49 +13,33 @@ export function SpotlightButton({ onClick, href }: SpotlightButtonProps) {
     const btnRef = useRef<HTMLButtonElement | HTMLAnchorElement>(null);
     const spanRef = useRef<HTMLSpanElement>(null);
 
-    useEffect(() => {
-        let rafId: number;
-        const handleMouseMove = (e: MouseEvent) => {
-            if (rafId) cancelAnimationFrame(rafId);
-            rafId = requestAnimationFrame(() => {
-                const target = e.target as HTMLElement;
-                const { width } = target.getBoundingClientRect();
-                const offset = (e as any).offsetX;
-                const left = `${(offset / width) * 100}%`;
-                if (spanRef.current) {
-                    spanRef.current.style.setProperty('--left', left);
-                }
-            });
-        };
+    const handleMouseMove = (e: ReactMouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const nextX = `${Math.max(0, Math.min(100, x))}%`;
 
-        const handleMouseLeave = () => {
-            if (rafId) cancelAnimationFrame(rafId);
-            if (spanRef.current) {
-                spanRef.current.style.setProperty('--left', "50%");
-            }
-        };
+        if (spanRef.current) {
+            spanRef.current.style.setProperty("--left", nextX);
+        }
+    };
 
-        btnRef.current?.addEventListener("mousemove", handleMouseMove);
-        btnRef.current?.addEventListener("mouseleave", handleMouseLeave);
-
-        return () => {
-            if (rafId) cancelAnimationFrame(rafId);
-            btnRef.current?.removeEventListener("mousemove", handleMouseMove);
-            btnRef.current?.removeEventListener("mouseleave", handleMouseLeave);
-        };
-    }, []);
+    const handleMouseLeave = () => {
+        if (spanRef.current) {
+            spanRef.current.style.setProperty("--left", "50%");
+        }
+    };
 
     const buttonContent = (
         <>
             {/* Moving Spotlight */}
             <span
                 ref={spanRef}
-                className="absolute bg-white rounded-full h-32 w-32 -translate-x-1/2 -translate-y-1/2 transition-none"
+                className="pointer-events-none absolute h-32 w-32 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white transition-[left] duration-150 ease-out"
                 style={{
                     left: "var(--left, 50%)",
                     top: "50%",
-                    '--left': '50%'
-                } as React.CSSProperties & { '--left': string }}
+                    "--left": "50%",
+                } as CSSProperties & { "--left": string }}
             />
 
             {/* Text with mix-blend-difference */}
@@ -69,6 +54,8 @@ export function SpotlightButton({ onClick, href }: SpotlightButtonProps) {
             <Link
                 ref={btnRef as any}
                 href={href}
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
                 className="relative overflow-hidden rounded-lg bg-black px-12 py-4 text-lg font-semibold transition-all duration-300 inline-block"
             >
                 {buttonContent}
@@ -80,6 +67,8 @@ export function SpotlightButton({ onClick, href }: SpotlightButtonProps) {
         <button
             ref={btnRef}
             onClick={onClick}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
             className="relative overflow-hidden rounded-lg bg-black px-12 py-4 text-lg font-semibold transition-all duration-300"
         >
             {buttonContent}
