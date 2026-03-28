@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Instagram, Twitter, Linkedin, Mail } from "lucide-react";
+import { Instagram, Linkedin, Mail } from "lucide-react";
 
 interface NavLink {
   label: string;
@@ -11,17 +11,23 @@ interface NavLink {
 const navLinks: NavLink[] = [
   { label: "Ana Sayfa", href: "/" },
   { label: "Çözümler", href: "/cozumler" },
+  { label: "Projeler", href: "/projeler" },
+  { label: "Blog", href: "/blog" },
   { label: "Hakkımızda", href: "/hakkimizda" },
   { label: "İletişim", href: "/iletisim" },
 ];
 
-const services = ["Web Tasarım", "QR Menüler", "SEO", "Yönetim Panelleri"];
+const services = [
+  "Etkileşimli Web Siteleri",
+  "Yönetim Panelleri",
+  "Akıllı QR Menüler",
+  "SEO Çözümleri",
+];
 
 const socialLinks = [
-  { icon: Instagram, href: "#", label: "Instagram" },
-  { icon: Twitter, href: "#", label: "Twitter" },
-  { icon: Linkedin, href: "#", label: "LinkedIn" },
-  { icon: Mail, href: "mailto:info@mfdigital.studio", label: "Email" },
+  { icon: Instagram, href: "https://www.instagram.com/mf.digitalstudio/", label: "Instagram" },
+  { icon: Linkedin, href: "http://linkedin.com/company/mfdigitalstudio", label: "LinkedIn" },
+  { icon: Mail, href: "mailto:info@mfdigitalstudio.com", label: "Email" },
 ];
 
 export function Footer() {
@@ -110,8 +116,12 @@ export function Footer() {
             &copy; {new Date().getFullYear()} MF Digital Studio. Tüm hakları saklıdır.
           </p>
           <div className="flex gap-6 text-sm text-white/30">
-            <span>Gizlilik Politikası</span>
-            <span>Kullanım Şartları</span>
+            <Link href="/gizlilik-politikasi" className="transition-colors hover:text-white/70 hover:underline underline-offset-4">
+              Gizlilik Politikası
+            </Link>
+            <Link href="/kullanim-sartlari" className="transition-colors hover:text-white/70 hover:underline underline-offset-4">
+              Kullanım Şartları
+            </Link>
           </div>
         </div>
       </div>

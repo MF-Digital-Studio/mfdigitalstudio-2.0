@@ -152,7 +152,7 @@ export function AboutPage() {
               { value: "50+", label: "Teslim Edilen Proje" },
               { value: "7 Gün", label: "Ortalama Teslimat" },
               { value: "%100", label: "Müşteri Memnuniyeti" },
-              { value: "2", label: "Tutkulu Geliştirici" },
+              { value: "5", label: "Yıl Deneyim" },
             ].map((stat) => (
               <div
                 key={stat.label}

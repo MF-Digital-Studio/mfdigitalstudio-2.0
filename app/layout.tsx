@@ -3,6 +3,7 @@ import { Geist, Syne } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/sections/footer'
+import { CookieBanner } from '@/components/cookie-banner'
 import './globals.css'
 
 const geist = Geist({
@@ -40,6 +41,7 @@ export default function RootLayout({
         <Navbar />
         <main>{children}</main>
         <Footer />
+        <CookieBanner />
         <Analytics />
       </body>
     </html>
