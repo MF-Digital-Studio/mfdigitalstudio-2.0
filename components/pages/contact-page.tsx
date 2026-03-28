@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { AlertCircle, CheckCircle2, Loader2, Mail, MessageSquare } from "lucide-react";
 
@@ -139,20 +140,30 @@ export function ContactPage() {
     setIsSubmitting(true);
 
     try {
-      if (typeof navigator !== "undefined" && !navigator.onLine) {
-        throw new Error("İnternet bağlantınızı kontrol edip tekrar deneyin.");
+      const response = await fetch("/api/send", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || "Mesaj gönderilemedi. Lütfen tekrar deneyin.");
       }
 
-      await new Promise((resolve) => setTimeout(resolve, 1200));
-
       setSubmitState("success");
-      setSubmitMessage("Mesajınız başarıyla gönderildi. En kısa sürede sizinle iletişime geçeceğiz.");
+      setSubmitMessage("Mesajınız iletildi, 24 saat içinde dönüş yapacağız.");
       setForm(INITIAL_FORM);
       setErrors({});
       setTouched({});
     } catch (error) {
       setSubmitState("error");
-      setSubmitMessage(error instanceof Error ? error.message : "Mesaj gönderilemedi. Lütfen tekrar deneyin.");
+      setSubmitMessage(
+        error instanceof Error ? error.message : "Mesaj gönderilemedi. Lütfen tekrar deneyin."
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -209,23 +220,29 @@ export function ContactPage() {
               <p className="mt-1 text-sm text-white/55">Tüm alanları doldurarak bize ulaşabilirsiniz.</p>
             </div>
 
-            {submitState !== "idle" && (
-              <div
-                className={`mb-6 flex items-start gap-3 rounded-md border px-4 py-3 text-sm ${submitState === "success"
-                  ? "border-[#333] bg-[#0f0f0f] text-white"
-                  : "border-red-500/70 bg-[#140909] text-red-200"
-                  }`}
-                role="status"
-                aria-live="polite"
-              >
-                {submitState === "success" ? (
-                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-white" />
-                ) : (
-                  <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-red-300" />
-                )}
-                <p>{submitMessage}</p>
-              </div>
-            )}
+            <AnimatePresence mode="wait">
+              {submitState !== "idle" && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                  className={`mb-6 flex items-start gap-3 rounded-md border px-4 py-3 text-sm ${submitState === "success"
+                      ? "border-[#333] bg-[#0f0f0f] text-white"
+                      : "border-red-500/70 bg-[#140909] text-red-200"
+                    }`}
+                  role="status"
+                  aria-live="polite"
+                >
+                  {submitState === "success" ? (
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-white" />
+                  ) : (
+                    <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-red-300" />
+                  )}
+                  <p>{submitMessage}</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
             <form onSubmit={handleSubmit} className="space-y-4" noValidate>
               <div>
@@ -314,7 +331,7 @@ export function ContactPage() {
                   <option value="panel">Yönetim Paneli</option>
                   <option value="qr">QR Menü Çözümleri</option>
                   <option value="seo">SEO ve İçerik Optimizasyonu</option>
-                  <option value="other">Other</option>
+                  <option value="other">Diğer</option>
                 </select>
 
                 {form.service === "other" && (
