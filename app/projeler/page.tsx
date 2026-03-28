@@ -13,7 +13,6 @@ const syne = Syne({
 
 const CATEGORY_META: Record<Project["category"], string> = {
     "WEB SİTELERİ": "Kurumsal ve e-ticaret yüzlerinde marka kimliğini premium bir anlatıyla birleştiren projeler.",
-    PANELLER: "Karmaşık operasyonları sadeleştiren, karar hızını artıran yönetim ekranları.",
     "QR MENÜ": "Temassız sipariş deneyimini estetik ve performans odaklı akışlarla güçlendiren çözümler.",
 };
 
@@ -35,22 +34,6 @@ function ProjectCard({ project }: { project: Project }) {
 
                 <div className="mt-5">
                     <p className="text-[11px] uppercase tracking-[0.18em] text-black/55">{project.client}</p>
-
-                    <div className="mt-3">
-                        <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-black/45">
-                            PERFORMANS VERİLERİ
-                        </p>
-                        <div className="grid grid-cols-3 gap-2">
-                            {project.stats.map((stat) => (
-                                <div key={stat.label}>
-                                    <p className="text-lg font-black tracking-tight text-black md:text-xl">
-                                        +{stat.value}{stat.suffix}
-                                    </p>
-                                    <p className="text-[10px] uppercase tracking-[0.12em] text-black/50">{stat.label}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
 
                     <h3 className={`${syne.className} mt-4 text-2xl font-extrabold uppercase leading-tight tracking-[-0.02em] md:text-3xl`}>
                         {project.title}

@@ -32,7 +32,7 @@ const Card = ({ project }: { project: Project }) => {
                 <p className="text-xs sm:text-sm uppercase tracking-widest text-white/60 mb-2 font-display font-semibold">
                     {project.category}
                 </p>
-                <h3 className="font-display text-2xl sm:text-4xl lg:text-5xl font-black uppercase text-white leading-none">
+                <h3 className="font-display text-xl sm:text-2xl lg:text-3xl font-black uppercase text-white leading-none">
                     {project.title}
                 </h3>
             </div>
@@ -64,38 +64,6 @@ const HorizontalScrollCarousel = () => {
 export function FeaturedProjectsHorizontal() {
     return (
         <section className="relative bg-black overflow-x-clip">
-            {/* Section Header */}
-            {/* <div className="relative max-w-7xl mx-auto px-6 pt-24 pb-16">
-                <div className="absolute inset-0 overflow-hidden -z-10">
-                    <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-vibrant-purple/10 via-transparent to-transparent rounded-full blur-3xl" />
-                    <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-to-tl from-electric-blue/10 via-transparent to-transparent rounded-full blur-3xl" />
-                </div>
-
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                    viewport={{ once: true }}
-                >
-                    <h2 className="font-display text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black uppercase text-white mb-4 tracking-tight leading-none">
-                        ÖNE ÇIKAN
-                        <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-electric-blue via-vibrant-purple to-neon-green">
-                            PROJELERİMİZ
-                        </span>
-                    </h2>
-
-                    <p className="text-base sm:text-lg text-white/60 max-w-2xl mt-6 leading-relaxed">
-                        Sektörde standartları yeniden tanımlayan, sıradanlığı unutturan dijital çalışmalarımız. Her proje bir hikaye, her hikaye bir başarı.
-                    </p>
-
-                    <p className="text-xs sm:text-sm uppercase tracking-widest text-white/40 mt-8 font-display">
-                        Sağa kaydırarak keşfedin ↻
-                    </p>
-                </motion.div>
-            </div> */}
-
-            {/* Horizontal Scroll Carousel */}
             <HorizontalScrollCarousel />
         </section>
     );

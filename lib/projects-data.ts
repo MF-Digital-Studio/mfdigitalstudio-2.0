@@ -25,7 +25,7 @@ export type LighthouseScores = {
     seo: number;
 };
 
-export type ProjectCategory = "WEB SİTELERİ" | "PANELLER" | "QR MENÜ";
+export type ProjectCategory = "WEB SİTELERİ" | "QR MENÜ";
 
 export type Project = {
     id: number;

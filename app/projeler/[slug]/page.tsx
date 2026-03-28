@@ -239,17 +239,25 @@ export default function ProjeDetayPage() {
                         <p className="mt-5 max-w-2xl text-sm leading-relaxed text-black/60 sm:text-lg">{project.summary}</p>
 
                         {hasPreview && (
-                            <button
+                            <motion.button
                                 type="button"
                                 onClick={() => setIsPreviewOpen(true)}
-                                className="group mt-6 inline-flex items-center gap-2.5 rounded-full border border-black/20 bg-white px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.2em] text-black transition hover:border-black hover:bg-black hover:text-white"
+                                animate={{
+                                    boxShadow: [
+                                        "0 0 0 rgba(16, 185, 129, 0)",
+                                        "0 0 0.9rem rgba(16, 185, 129, 0.38)",
+                                        "0 0 0 rgba(16, 185, 129, 0)",
+                                    ],
+                                }}
+                                transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+                                className="group mt-6 inline-flex items-center gap-2.5 rounded-full border border-emerald-400/45 bg-white px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.2em] text-black transition hover:border-black hover:bg-black hover:text-white"
                             >
                                 <span className="relative flex h-2.5 w-2.5 items-center justify-center">
                                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500/70" />
                                     <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
                                 </span>
                                 CANLI ONIZLEME
-                            </button>
+                            </motion.button>
                         )}
                     </div>
 
@@ -311,7 +319,7 @@ export default function ProjeDetayPage() {
                                             <img
                                                 src={src}
                                                 alt={`${project.title} — ${label}`}
-                                                className="w-full "
+                                                className="w-full"
                                             />
                                         </div>
                                         <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-black/40">{label}</p>
