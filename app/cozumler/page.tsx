@@ -1,7 +1,7 @@
 import { SolutionsPage } from "@/components/pages/solutions-page";
 
 export const metadata = {
-    title: "Çözümler | MF Digital Studio",
+    title: "Çözümler",
     description: "Sunduğumuz dijital çözümleri keşfedin.",
 };
 

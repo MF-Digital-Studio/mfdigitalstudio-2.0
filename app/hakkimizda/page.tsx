@@ -1,7 +1,7 @@
 import { AboutPage } from "@/components/pages/about-page";
 
 export const metadata = {
-    title: "Hakkımızda | MF Digital Studio",
+    title: "Hakkımızda",
     description: "MF Digital Studio hakkında bilgi edinin.",
 };
 

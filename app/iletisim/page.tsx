@@ -1,7 +1,7 @@
 import { ContactPage } from "@/components/pages/contact-page";
 
 export const metadata = {
-    title: "İletişim | MF Digital Studio",
+    title: "İletişim",
     description: "Bize ulaşın ve iletişim kurun.",
 };
 
