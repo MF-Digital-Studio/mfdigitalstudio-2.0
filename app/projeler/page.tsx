@@ -4,130 +4,13 @@ import Link from "next/link";
 import { Syne } from "next/font/google";
 import { motion } from "framer-motion";
 import { useMemo, useRef, useState } from "react";
-
-type ProjectStat = {
-    label: string;
-    value: number;
-    suffix: string;
-};
-
-type Project = {
-    id: number;
-    slug: string;
-    title: string;
-    category: "WEB SİTELERİ" | "PANELLER" | "QR MENÜ";
-    client: string;
-    summary: string;
-    image: string;
-    gradient: string;
-    stats: ProjectStat[];
-};
+import { CATEGORIES, PROJECTS_DATA, type Project } from "@/lib/projects-data";
 
 const syne = Syne({
     subsets: ["latin"],
     weight: ["700", "800"],
 });
 
-const PROJECTS_DATA: Project[] = [
-    {
-        id: 1,
-        slug: "moda-house",
-        title: "MODA HOUSE E-TİCARET",
-        category: "WEB SİTELERİ",
-        client: "Moda House",
-        summary: "Markanın dijital vitrinini hız, estetik ve dönüşüm odaklı bir deneyime dönüştürdük.",
-        image:
-            "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1600&q=80",
-        gradient: "from-fuchsia-500/45 via-rose-400/35 to-orange-300/35",
-        stats: [
-            { label: "SEO", value: 200, suffix: "%" },
-            { label: "Performans", value: 145, suffix: "%" },
-            { label: "Memnuniyet", value: 98, suffix: "%" },
-        ],
-    },
-    {
-        id: 2,
-        slug: "seyahat-ajansi",
-        title: "SEYAHAT AJANSI REZERVASYON",
-        category: "WEB SİTELERİ",
-        client: "Rota Plus",
-        summary: "Sıradanlığı kıran tipografi ve hikâye kurgusuyla rezervasyon akışını sadeleştirdik.",
-        image:
-            "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1600&q=80",
-        gradient: "from-orange-400/45 via-amber-300/35 to-pink-400/35",
-        stats: [
-            { label: "SEO", value: 172, suffix: "%" },
-            { label: "Performans", value: 133, suffix: "%" },
-            { label: "Memnuniyet", value: 96, suffix: "%" },
-        ],
-    },
-    {
-        id: 3,
-        slug: "finans-yonetim",
-        title: "FİNANS YÖNETİM PANELİ",
-        category: "PANELLER",
-        client: "Pulse Fintek",
-        summary: "Kritik karar ekranlarını veri yoğun ama berrak bir panel sistemine taşıdık.",
-        image:
-            "https://images.unsplash.com/photo-1551281044-8b0a65a2d5c3?auto=format&fit=crop&w=1600&q=80",
-        gradient: "from-lime-400/40 via-emerald-300/35 to-cyan-300/35",
-        stats: [
-            { label: "SEO", value: 148, suffix: "%" },
-            { label: "Performans", value: 119, suffix: "%" },
-            { label: "Memnuniyet", value: 97, suffix: "%" },
-        ],
-    },
-    {
-        id: 4,
-        slug: "hastane-operasyon",
-        title: "HASTANE OPERASYON PANELİ",
-        category: "PANELLER",
-        client: "MediCore",
-        summary: "Klinik ve operasyon ekiplerini tek bir gerçek zamanlı karar merkezinde buluşturduk.",
-        image:
-            "https://images.unsplash.com/photo-1576089172869-4f5f6f315620?auto=format&fit=crop&w=1600&q=80",
-        gradient: "from-pink-500/45 via-fuchsia-300/35 to-yellow-300/35",
-        stats: [
-            { label: "SEO", value: 131, suffix: "%" },
-            { label: "Performans", value: 112, suffix: "%" },
-            { label: "Memnuniyet", value: 99, suffix: "%" },
-        ],
-    },
-    {
-        id: 5,
-        slug: "restoran-qr",
-        title: "RESTORAN QR MENÜ",
-        category: "QR MENÜ",
-        client: "Lezzet Durağı",
-        summary: "Müşteri deneyimini hızlandıran, sipariş süresini kısaltan görsel odaklı QR menü tasarladık.",
-        image:
-            "https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1600&q=80",
-        gradient: "from-violet-500/40 via-fuchsia-300/30 to-amber-300/35",
-        stats: [
-            { label: "SEO", value: 164, suffix: "%" },
-            { label: "Performans", value: 121, suffix: "%" },
-            { label: "Memnuniyet", value: 97, suffix: "%" },
-        ],
-    },
-    {
-        id: 6,
-        slug: "otel-qr",
-        title: "OTEL ODA SERVİS QR",
-        category: "QR MENÜ",
-        client: "Mavi Kıyı Otel",
-        summary: "Misafirlerin odadan çıkmadan sipariş verebildiği premium bir dijital menü deneyimi kurguladık.",
-        image:
-            "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1600&q=80",
-        gradient: "from-cyan-400/40 via-sky-300/30 to-fuchsia-300/35",
-        stats: [
-            { label: "SEO", value: 156, suffix: "%" },
-            { label: "Performans", value: 117, suffix: "%" },
-            { label: "Memnuniyet", value: 98, suffix: "%" },
-        ],
-    },
-];
-
-const CATEGORIES: Array<Project["category"]> = ["WEB SİTELERİ", "PANELLER", "QR MENÜ"];
 const CATEGORY_META: Record<Project["category"], string> = {
     "WEB SİTELERİ": "Kurumsal ve e-ticaret yüzlerinde marka kimliğini premium bir anlatıyla birleştiren projeler.",
     PANELLER: "Karmaşık operasyonları sadeleştiren, karar hızını artıran yönetim ekranları.",

@@ -2,58 +2,19 @@
 
 import { motion, useTransform, useScroll } from "framer-motion";
 import { useRef } from "react";
-
-interface Project {
-    id: number;
-    url: string;
-    title: string;
-    category: string;
-}
-
-const projects: Project[] = [
-    {
-        id: 1,
-        url: "https://images.unsplash.com/photo-1460925895917-adf4e566b72b?w=1200&h=800&fit=crop",
-        title: "E-TİCARET DEVRİMİ",
-        category: "E-Commerce",
-    },
-    {
-        id: 2,
-        url: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=800&fit=crop",
-        title: "AKILLI QR MENÜ",
-        category: "Mobile Solutions",
-    },
-    {
-        id: 3,
-        url: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1200&h=800&fit=crop",
-        title: "KURUMSAL KİMLİK",
-        category: "Brand Design",
-    },
-    {
-        id: 4,
-        url: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&h=800&fit=crop",
-        title: "DİJİTAL PAZARLAMA",
-        category: "Marketing",
-    },
-    {
-        id: 5,
-        url: "https://images.unsplash.com/photo-1522869635100-ce0846a34923?w=1200&h=800&fit=crop",
-        title: "HARITA ÇÖZÜMÜ",
-        category: "Web Development",
-    },
-];
+import { FEATURED_PROJECTS, type Project } from "@/lib/projects-data";
 
 const Card = ({ project }: { project: Project }) => {
     return (
         <motion.div
-            className="group relative h-[400px] sm:h-[450px] w-[80vw] sm:w-[600px] flex-shrink-0 overflow-hidden rounded-2xl"
+            className="group relative h-100 w-[80vw] shrink-0 overflow-hidden rounded-2xl sm:h-112.5 sm:w-150"
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.3 }}
         >
             {/* Background Image */}
             <div
                 style={{
-                    backgroundImage: `url(${project.url})`,
+                    backgroundImage: `url(${project.image})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                 }}
@@ -61,7 +22,7 @@ const Card = ({ project }: { project: Project }) => {
             />
 
             {/* Dark Gradient Overlay */}
-            <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+            <div className="absolute inset-0 z-10 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
 
             {/* Border Accent */}
             <div className="absolute inset-0 z-20 border border-white/10 rounded-2xl" />
@@ -91,7 +52,7 @@ const HorizontalScrollCarousel = () => {
             {/* Sticky Container */}
             <div className="sticky top-0 h-screen bg-black flex items-center overflow-x-clip">
                 <motion.div style={{ x }} className="flex gap-8">
-                    {projects.map((project) => (
+                    {FEATURED_PROJECTS.map((project) => (
                         <Card key={project.id} project={project} />
                     ))}
                 </motion.div>
