@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { AlertCircle, CheckCircle2, Loader2, Mail, MessageSquare } from "lucide-react";
+import { AlertCircle, CheckCircle2, Loader2, Mail, MessageSquare, Phone } from "lucide-react";
 
 type FormValues = {
   fullName: string;
@@ -204,6 +204,18 @@ export function ContactPage() {
                   <Mail className="h-4 w-4" />
                 </div>
                 <span>info@mfdigitalstudio.com</span>
+              </div>
+              <div className="flex items-center gap-3 text-sm text-white/65">
+                <div className="flex h-10 w-10 items-center justify-center rounded-md border border-[#222] bg-black">
+                  <Phone className="h-4 w-4" />
+                </div>
+                <span>+90 537 033 95 56</span>
+              </div>
+              <div className="flex items-center gap-3 text-sm text-white/65">
+                <div className="flex h-10 w-10 items-center justify-center rounded-md border border-[#222] bg-black">
+                  <Phone className="h-4 w-4" />
+                </div>
+                <span>+90 531 660 40 02</span>
               </div>
               <div className="flex items-center gap-3 text-sm text-white/65">
                 <div className="flex h-10 w-10 items-center justify-center rounded-md border border-[#222] bg-black">
