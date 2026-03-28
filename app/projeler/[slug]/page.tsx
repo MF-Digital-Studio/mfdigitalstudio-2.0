@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Syne } from "next/font/google";
 import {
+    AnimatePresence,
     animate,
     motion,
     useMotionTemplate,
@@ -168,11 +169,34 @@ function SpotlightCTA() {
 export default function ProjeDetayPage() {
     const params = useParams<{ slug: string }>();
     const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug;
+    const [isPreviewOpen, setIsPreviewOpen] = useState(false);
 
     const project = useMemo(
         () => PROJECTS_DATA.find((item) => item.slug === slug),
         [slug],
     );
+    const previewUrl = project?.previewUrl;
+    const hasPreview = Boolean(previewUrl);
+
+    useEffect(() => {
+        if (!isPreviewOpen) {
+            return;
+        }
+
+        const handleEsc = (event: KeyboardEvent) => {
+            if (event.key === "Escape") {
+                setIsPreviewOpen(false);
+            }
+        };
+
+        document.body.style.overflow = "hidden";
+        window.addEventListener("keydown", handleEsc);
+
+        return () => {
+            document.body.style.overflow = "";
+            window.removeEventListener("keydown", handleEsc);
+        };
+    }, [isPreviewOpen]);
 
     if (!project) {
         return (
@@ -213,6 +237,20 @@ export default function ProjeDetayPage() {
                             {project.title}
                         </motion.h1>
                         <p className="mt-5 max-w-2xl text-sm leading-relaxed text-black/60 sm:text-lg">{project.summary}</p>
+
+                        {hasPreview && (
+                            <button
+                                type="button"
+                                onClick={() => setIsPreviewOpen(true)}
+                                className="group mt-6 inline-flex items-center gap-2.5 rounded-full border border-black/20 bg-white px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.2em] text-black transition hover:border-black hover:bg-black hover:text-white"
+                            >
+                                <span className="relative flex h-2.5 w-2.5 items-center justify-center">
+                                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500/70" />
+                                    <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
+                                </span>
+                                CANLI ONIZLEME
+                            </button>
+                        )}
                     </div>
 
                     {/* Hero image — full bleed, single border, sharp corners */}
@@ -343,6 +381,59 @@ export default function ProjeDetayPage() {
                     </section>
                 </section>
             </motion.div>
+
+            <AnimatePresence>
+                {hasPreview && isPreviewOpen && previewUrl && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.22 }}
+                        className="fixed inset-0 z-50 bg-black/45 backdrop-blur-md"
+                        onClick={() => setIsPreviewOpen(false)}
+                        role="dialog"
+                        aria-modal="true"
+                        aria-label="Canli Onizleme"
+                    >
+                        <motion.div
+                            initial={{ opacity: 0, y: 24, scale: 0.985 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: 12, scale: 0.99 }}
+                            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                            className="absolute inset-0 h-screen w-screen overflow-hidden rounded-none border-0 bg-[#0f1014] shadow-2xl md:inset-1/2 md:h-[85vh] md:w-[90vw] md:max-w-400 md:-translate-x-1/2 md:-translate-y-1/2 md:rounded-2xl md:border md:border-white/10"
+                            onClick={(event) => event.stopPropagation()}
+                        >
+                            <div className="flex h-12 items-center justify-between border-b border-white/10 bg-[#111319] px-4 md:h-11 md:px-5">
+                                <a
+                                    href={previewUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="truncate text-[11px] font-medium tracking-[0.14em] text-white/65 underline-offset-4 transition hover:text-white hover:underline"
+                                >
+                                    {previewUrl}
+                                </a>
+
+                                <button
+                                    type="button"
+                                    onClick={() => setIsPreviewOpen(false)}
+                                    className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-white/20 text-sm text-white/80 transition hover:border-white hover:text-white"
+                                    aria-label="Kapat"
+                                >
+                                    X
+                                </button>
+                            </div>
+
+                            <iframe
+                                src={previewUrl}
+                                title="Canli Onizleme"
+                                className="h-[calc(100%-3rem)] w-full bg-white md:h-[calc(100%-2.75rem)]"
+                                loading="lazy"
+                                referrerPolicy="strict-origin-when-cross-origin"
+                            />
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </main>
     );
 }
