@@ -46,9 +46,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="tr">
-      <body className={`${geist.variable} ${syne.variable} font-sans antialiased` + " bg-black"}>
+      <body className={`${geist.variable} ${syne.variable} font-sans antialiased bg-black`}>
         <Navbar />
-        {children}
+        <main>{children}</main>
         <Footer />
         <Analytics />
       </body>

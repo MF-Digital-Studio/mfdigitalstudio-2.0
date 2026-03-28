@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Globe, LayoutDashboard, QrCode, Search, ArrowRight, X } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 const cards = [
   {
@@ -120,100 +120,96 @@ export function SolutionsPage() {
         </div>
 
         {/* Overlay backdrop & Expanded Card */}
-        <AnimatePresence>
-          {focusedCardId && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 lg:p-12 pointer-events-none">
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onClick={() => setFocusedCardId(null)}
-                className="absolute inset-0 z-0 bg-black/80 backdrop-blur-md cursor-pointer pointer-events-auto"
-              />
+        {focusedCardId && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 lg:p-12 pointer-events-none">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              onClick={() => setFocusedCardId(null)}
+              className="absolute inset-0 z-0 bg-black/80 backdrop-blur-md cursor-pointer pointer-events-auto"
+            />
 
-              {cards.filter(c => c.id === focusedCardId).map((card) => {
-                const Icon = card.icon;
-                return (
-                  <motion.div
-                    key={`expanded-${card.id}`}
-                    layoutId={`card-container-${card.id}`}
-                    className="w-full max-w-6xl h-[90vh] md:h-full max-h-[800px] flex flex-col md:flex-row rounded-3xl overflow-hidden shadow-2xl shadow-black/50 pointer-events-auto relative bg-deep-black z-10"
-                  >
-                    {/* Left Side: Main Visual */}
-                    <div className="relative flex-1 p-8 md:p-12 flex flex-col justify-between border-b md:border-b-0 md:border-r border-white/10 overflow-hidden min-h-[40vh] md:min-h-full">
-                      <motion.div layoutId={`card-bg-${card.id}`} className={`absolute inset-0 bg-gradient-to-br ${card.gradient}`} />
-                      <div className="absolute inset-0 bg-black/25 z-0" />
+            {cards.filter(c => c.id === focusedCardId).map((card) => {
+              const Icon = card.icon;
+              return (
+                <motion.div
+                  key={`expanded-${card.id}`}
+                  layoutId={`card-container-${card.id}`}
+                  className="w-full max-w-6xl h-[90vh] md:h-full max-h-[800px] flex flex-col md:flex-row rounded-3xl overflow-hidden shadow-2xl shadow-black/50 pointer-events-auto relative bg-deep-black z-10"
+                >
+                  {/* Left Side: Main Visual */}
+                  <div className="relative flex-1 p-8 md:p-12 flex flex-col justify-between border-b md:border-b-0 md:border-r border-white/10 overflow-hidden min-h-[40vh] md:min-h-full">
+                    <motion.div layoutId={`card-bg-${card.id}`} className={`absolute inset-0 bg-gradient-to-br ${card.gradient}`} />
+                    <div className="absolute inset-0 bg-black/25 z-0" />
 
-                      <motion.div layoutId={`icon-wrap-${card.id}`} className="relative z-10 w-16 h-16 md:w-20 md:h-20 rounded-3xl bg-white/20 flex items-center justify-center backdrop-blur-sm mb-8">
-                        <Icon className="w-8 h-8 md:w-10 md:h-10 text-white" />
-                      </motion.div>
+                    <motion.div layoutId={`icon-wrap-${card.id}`} className="relative z-10 w-16 h-16 md:w-20 md:h-20 rounded-3xl bg-white/20 flex items-center justify-center backdrop-blur-sm mb-8">
+                      <Icon className="w-8 h-8 md:w-10 md:h-10 text-white" />
+                    </motion.div>
 
-                      <div className="relative z-10 mt-auto">
-                        <motion.h3 layoutId={`title-${card.id}`} className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
-                          {card.title}
-                        </motion.h3>
-                        <motion.p layoutId={`desc-${card.id}`} className="text-white/90 text-lg md:text-xl leading-relaxed mb-8 max-w-xl">
-                          {card.description}
-                        </motion.p>
-                        <motion.ul layoutId={`features-${card.id}`} className="hidden flex-wrap gap-3 md:flex">
-                          {card.features.map((f) => (
-                            <li
-                              key={f}
-                              className="px-4 py-2 rounded-full bg-white/20 text-white text-sm font-medium backdrop-blur-sm"
-                            >
-                              {f}
-                            </li>
-                          ))}
-                        </motion.ul>
-                      </div>
-                    </div>
-
-                    {/* Right Side: Detailed Text Section */}
-                    <motion.div
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: 20 }}
-                      transition={{ delay: 0.1, duration: 0.3 }}
-                      className="relative z-10 flex-1 p-8 md:p-12 bg-white/5 flex flex-col overflow-y-auto"
-                    >
-                      <button
-                        onClick={() => setFocusedCardId(null)}
-                        className="absolute top-6 right-6 md:top-8 md:right-8 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors text-white z-20 cursor-pointer"
-                      >
-                        <X className="w-6 h-6" />
-                      </button>
-                      <h4 className="font-display text-2xl md:text-3xl font-bold text-white mb-6 pr-16">
-                        Hizmet Detayları
-                      </h4>
-                      <ul className="mb-6 flex flex-wrap gap-2 md:hidden">
+                    <div className="relative z-10 mt-auto">
+                      <motion.h3 layoutId={`title-${card.id}`} className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
+                        {card.title}
+                      </motion.h3>
+                      <motion.p layoutId={`desc-${card.id}`} className="text-white/90 text-lg md:text-xl leading-relaxed mb-8 max-w-xl">
+                        {card.description}
+                      </motion.p>
+                      <motion.ul layoutId={`features-${card.id}`} className="hidden flex-wrap gap-3 md:flex">
                         {card.features.map((f) => (
                           <li
-                            key={`mobile-${f}`}
-                            className="px-3 py-1 rounded-full bg-white/15 text-white text-xs font-medium"
+                            key={f}
+                            className="px-4 py-2 rounded-full bg-white/20 text-white text-sm font-medium backdrop-blur-sm"
                           >
                             {f}
                           </li>
                         ))}
-                      </ul>
-                      <div className="text-white/70 space-y-4 text-base md:text-lg leading-relaxed">
-                        <p>
-                          Buraya <strong>{card.title}</strong> hizmetimiz hakkında çok daha kapsamlı, teknik detaylar, süreç aşamaları, başarı hikayeleri ve müşteri faydalarını içeren detaylı bir açıklama gelecek. Bu alan {card.title} ile müşterilerimizin dijital varlığını nasıl dönüştürdüğümüzü detaylandırmak için tasarlanmıştır.
-                        </p>
-                        <p>
-                          Proje analizi, strateji belirleme, tasarım ve geliştirme süreçlerinin tümü, işletmenizin hedeflerine ulaşması için özenle yönetilir. Amacımız, sadece estetik değil, aynı zamanda yüksek performanslı ve kullanıcı dostu bir deneyim sunmaktır.
-                        </p>
-                        <p>
-                          Detaylı bir teklif almak veya vizyonunuzu gerçeğe dönüştürmek için iletişim sayfamızdan bize ulaşabilirsiniz.
-                        </p>
-                      </div>
-                    </motion.div>
+                      </motion.ul>
+                    </div>
+                  </div>
 
+                  {/* Right Side: Detailed Text Section */}
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.1, duration: 0.3 }}
+                    className="relative z-10 flex-1 p-8 md:p-12 bg-white/5 flex flex-col overflow-y-auto"
+                  >
+                    <button
+                      onClick={() => setFocusedCardId(null)}
+                      className="absolute top-6 right-6 md:top-8 md:right-8 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors text-white z-20 cursor-pointer"
+                    >
+                      <X className="w-6 h-6" />
+                    </button>
+                    <h4 className="font-display text-2xl md:text-3xl font-bold text-white mb-6 pr-16">
+                      Hizmet Detayları
+                    </h4>
+                    <ul className="mb-6 flex flex-wrap gap-2 md:hidden">
+                      {card.features.map((f) => (
+                        <li
+                          key={`mobile-${f}`}
+                          className="px-3 py-1 rounded-full bg-white/15 text-white text-xs font-medium"
+                        >
+                          {f}
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="text-white/70 space-y-4 text-base md:text-lg leading-relaxed">
+                      <p>
+                        Buraya <strong>{card.title}</strong> hizmetimiz hakkında çok daha kapsamlı, teknik detaylar, süreç aşamaları, başarı hikayeleri ve müşteri faydalarını içeren detaylı bir açıklama gelecek. Bu alan {card.title} ile müşterilerimizin dijital varlığını nasıl dönüştürdüğümüzü detaylandırmak için tasarlanmıştır.
+                      </p>
+                      <p>
+                        Proje analizi, strateji belirleme, tasarım ve geliştirme süreçlerinin tümü, işletmenizin hedeflerine ulaşması için özenle yönetilir. Amacımız, sadece estetik değil, aynı zamanda yüksek performanslı ve kullanıcı dostu bir deneyim sunmaktır.
+                      </p>
+                      <p>
+                        Detaylı bir teklif almak veya vizyonunuzu gerçeğe dönüştürmek için iletişim sayfamızdan bize ulaşabilirsiniz.
+                      </p>
+                    </div>
                   </motion.div>
-                );
-              })}
-            </div>
-          )}
-        </AnimatePresence>
+
+                </motion.div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );

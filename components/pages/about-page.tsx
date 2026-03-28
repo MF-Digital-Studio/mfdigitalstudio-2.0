@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Lightbulb, Code2, Rocket, Users } from "lucide-react";
 import { SpotlightButton } from "@/components/ui/spotlight-button";
 
@@ -189,18 +189,15 @@ export function AboutPage() {
                   className="relative border-b border-neutral-200 py-6 md:py-10 cursor-pointer transition-colors group"
                 >
                   {/* Glow Background */}
-                  <AnimatePresence>
-                    {isHovered && (
-                      <motion.div
-                        layoutId="glow-bg-values"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className={`absolute inset-0 bg-linear-to-r ${v.glowClass} pointer-events-none`}
-                      />
-                    )}
-                  </AnimatePresence>
+                  {isHovered && (
+                    <motion.div
+                      layoutId="glow-bg-values"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.3 }}
+                      className={`absolute inset-0 bg-linear-to-r ${v.glowClass} pointer-events-none`}
+                    />
+                  )}
 
                   <div
                     className={`relative z-10 transition-all duration-500 px-4 md:px-8 ${isOtherHovered ? "opacity-30" : "opacity-100"
@@ -218,21 +215,18 @@ export function AboutPage() {
                       </h3>
                     </div>
 
-                    <AnimatePresence>
-                      {isHovered && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0, marginTop: 0 }}
-                          animate={{ height: "auto", opacity: 1, marginTop: 16 }}
-                          exit={{ height: 0, opacity: 0, marginTop: 0 }}
-                          transition={{ duration: 0.3, ease: "easeOut" }}
-                          className="overflow-hidden"
-                        >
-                          <p className="text-neutral-900 text-lg md:text-xl max-w-2xl md:ml-16">
-                            {v.description}
-                          </p>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+                    {isHovered && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0, marginTop: 0 }}
+                        animate={{ height: "auto", opacity: 1, marginTop: 16 }}
+                        transition={{ duration: 0.3, ease: "easeOut" }}
+                        className="overflow-hidden"
+                      >
+                        <p className="text-neutral-900 text-lg md:text-xl max-w-2xl md:ml-16">
+                          {v.description}
+                        </p>
+                      </motion.div>
+                    )}
                   </div>
                 </div>
               );
@@ -270,21 +264,18 @@ export function AboutPage() {
                     </span>
                   </button>
 
-                  <AnimatePresence initial={false}>
-                    {isOpen && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.28, ease: "easeOut" }}
-                        className="overflow-hidden"
-                      >
-                        <p className="pb-6 pr-2 text-base md:text-lg text-neutral-700 leading-relaxed font-sans max-w-3xl">
-                          {item.answer}
-                        </p>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      transition={{ duration: 0.28, ease: "easeOut" }}
+                      className="overflow-hidden"
+                    >
+                      <p className="pb-6 pr-2 text-base md:text-lg text-neutral-700 leading-relaxed font-sans max-w-3xl">
+                        {item.answer}
+                      </p>
+                    </motion.div>
+                  )}
                 </article>
               );
             })}

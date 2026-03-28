@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { AlertCircle, CheckCircle2, Loader2, Mail, MessageSquare } from "lucide-react";
 
@@ -220,29 +220,26 @@ export function ContactPage() {
               <p className="mt-1 text-sm text-white/55">Tüm alanları doldurarak bize ulaşabilirsiniz.</p>
             </div>
 
-            <AnimatePresence mode="wait">
-              {submitState !== "idle" && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.3 }}
-                  className={`mb-6 flex items-start gap-3 rounded-md border px-4 py-3 text-sm ${submitState === "success"
-                      ? "border-[#333] bg-[#0f0f0f] text-white"
-                      : "border-red-500/70 bg-[#140909] text-red-200"
-                    }`}
-                  role="status"
-                  aria-live="polite"
-                >
-                  {submitState === "success" ? (
-                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-white" />
-                  ) : (
-                    <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-red-300" />
-                  )}
-                  <p>{submitMessage}</p>
-                </motion.div>
-              )}
-            </AnimatePresence>
+            {submitState !== "idle" && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                className={`mb-6 flex items-start gap-3 rounded-md border px-4 py-3 text-sm ${submitState === "success"
+                  ? "border-[#333] bg-[#0f0f0f] text-white"
+                  : "border-red-500/70 bg-[#140909] text-red-200"
+                  }`}
+                role="status"
+                aria-live="polite"
+              >
+                {submitState === "success" ? (
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-white" />
+                ) : (
+                  <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-red-300" />
+                )}
+                <p>{submitMessage}</p>
+              </motion.div>
+            )}
 
             <form onSubmit={handleSubmit} className="space-y-4" noValidate>
               <div>
