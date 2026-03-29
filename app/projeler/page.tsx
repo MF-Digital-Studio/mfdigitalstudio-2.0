@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { Syne } from "next/font/google";
 import { motion } from "framer-motion";
-import { useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { CATEGORIES, PROJECTS_DATA, type Project } from "@/lib/projects-data";
+import { DemoBadge } from "@/components/ui/demo-badge";
 
 const syne = Syne({
     subsets: ["latin"],
@@ -16,6 +17,37 @@ const CATEGORY_META: Record<Project["category"], string> = {
     "QR MENÜ": "Temassız sipariş deneyimini estetik ve performans odaklı akışlarla güçlendiren çözümler.",
 };
 
+type SliderMetrics = {
+    slidesPerView: number;
+    totalSteps: number;
+    maxStep: number;
+    snapOffsets: number[];
+    isMobile: boolean;
+};
+
+function clamp(value: number, min: number, max: number) {
+    return Math.max(min, Math.min(max, value));
+}
+
+function getNearestStep(scrollLeft: number, snapOffsets: number[], maxStep: number) {
+    if (snapOffsets.length === 0) {
+        return 0;
+    }
+
+    let nearest = 0;
+    let minDistance = Number.POSITIVE_INFINITY;
+
+    for (let i = 0; i < snapOffsets.length; i += 1) {
+        const distance = Math.abs(snapOffsets[i] - scrollLeft);
+        if (distance < minDistance) {
+            minDistance = distance;
+            nearest = i;
+        }
+    }
+
+    return clamp(nearest, 0, maxStep);
+}
+
 function ProjectCard({ project }: { project: Project }) {
     return (
         <Link href={`/projeler/${project.slug}`} className="block">
@@ -24,7 +56,12 @@ function ProjectCard({ project }: { project: Project }) {
                 whileHover={{ scale: 1.015 }}
                 transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             >
-                <div className="overflow-hidden rounded-4xl border border-black/10 bg-white">
+                <div className="relative overflow-hidden rounded-4xl border border-black/10 bg-white">
+                    {project.demoLabel && (
+                        <div className="absolute left-4 top-4 z-10">
+                            <DemoBadge label={project.demoLabel} className="bg-white/88" />
+                        </div>
+                    )}
                     <img
                         src={project.image}
                         alt={project.title}
@@ -46,56 +83,129 @@ function ProjectCard({ project }: { project: Project }) {
 }
 
 function CategorySlider({ category, projects }: { category: Project["category"]; projects: Project[] }) {
-    const [currentIndex, setCurrentIndex] = useState(0);
     const sliderRef = useRef<HTMLDivElement | null>(null);
-    const maxIndex = Math.max(projects.length - 1, 0);
+    const [activeStep, setActiveStep] = useState(0);
+    const [metrics, setMetrics] = useState<SliderMetrics>({
+        slidesPerView: 1,
+        totalSteps: Math.max(projects.length, 1),
+        maxStep: Math.max(projects.length - 1, 0),
+        snapOffsets: [],
+        isMobile: true,
+    });
 
-    const syncCurrentIndex = () => {
+    const syncActiveStep = useCallback((nextMetrics?: SliderMetrics) => {
+        const node = sliderRef.current;
+        const source = nextMetrics ?? metrics;
+
+        if (!node || source.snapOffsets.length === 0) {
+            return;
+        }
+
+        const step = getNearestStep(node.scrollLeft, source.snapOffsets, source.maxStep);
+        setActiveStep(step);
+    }, [metrics]);
+
+    const computeMetrics = useCallback(() => {
         const node = sliderRef.current;
         if (!node || projects.length === 0) {
             return;
         }
 
-        const firstCard = node.firstElementChild as HTMLElement | null;
-        const cardWidth = firstCard?.offsetWidth ?? node.clientWidth;
-        const gap = window.innerWidth >= 768 ? 32 : 16;
-        const next = Math.round(node.scrollLeft / (cardWidth + gap));
-        const bounded = Math.max(0, Math.min(maxIndex, next));
+        const cards = Array.from(node.children) as HTMLElement[];
+        if (cards.length === 0) {
+            return;
+        }
 
-        setCurrentIndex(bounded);
-    };
+        const firstCardWidth = cards[0].offsetWidth;
+        const computedGap = cards.length > 1
+            ? cards[1].offsetLeft - cards[0].offsetLeft - cards[0].offsetWidth
+            : 0;
+        const safeGap = Math.max(0, computedGap);
+        const trackUnit = Math.max(firstCardWidth + safeGap, 1);
 
-    const scrollToIndex = (index: number) => {
+        const estimatedSlidesPerView = Math.max(1, Math.floor((node.clientWidth + safeGap + 0.5) / trackUnit));
+        const slidesPerView = Math.min(projects.length, estimatedSlidesPerView);
+        const totalSteps = Math.max(projects.length - slidesPerView + 1, 1);
+        const maxStep = totalSteps - 1;
+        const snapOffsets = cards.slice(0, totalSteps).map((card) => card.offsetLeft);
+        const nextMetrics: SliderMetrics = {
+            slidesPerView,
+            totalSteps,
+            maxStep,
+            snapOffsets,
+            isMobile: window.innerWidth < 768,
+        };
+
+        setMetrics((prev) => {
+            const same =
+                prev.slidesPerView === nextMetrics.slidesPerView
+                && prev.totalSteps === nextMetrics.totalSteps
+                && prev.maxStep === nextMetrics.maxStep
+                && prev.isMobile === nextMetrics.isMobile
+                && prev.snapOffsets.length === nextMetrics.snapOffsets.length
+                && prev.snapOffsets.every((offset, index) => offset === nextMetrics.snapOffsets[index]);
+
+            return same ? prev : nextMetrics;
+        });
+
+        setActiveStep((prev) => clamp(getNearestStep(node.scrollLeft, snapOffsets, maxStep), 0, maxStep));
+    }, [projects.length]);
+
+    useEffect(() => {
+        computeMetrics();
+
         const node = sliderRef.current;
         if (!node) {
             return;
         }
 
-        const bounded = Math.max(0, Math.min(maxIndex, index));
-        const target = node.children[bounded] as HTMLElement | undefined;
+        const observer = new ResizeObserver(() => {
+            computeMetrics();
+        });
 
-        if (!target) {
+        observer.observe(node);
+        window.addEventListener("resize", computeMetrics);
+
+        return () => {
+            observer.disconnect();
+            window.removeEventListener("resize", computeMetrics);
+        };
+    }, [computeMetrics]);
+
+    useEffect(() => {
+        setActiveStep((prev) => clamp(prev, 0, metrics.maxStep));
+    }, [metrics.maxStep]);
+
+    const scrollToStep = (step: number) => {
+        const node = sliderRef.current;
+        if (!node) {
             return;
         }
 
-        node.scrollTo({ left: target.offsetLeft, behavior: "smooth" });
-        setCurrentIndex(bounded);
+        const bounded = clamp(step, 0, metrics.maxStep);
+        const nextOffset = metrics.snapOffsets[bounded] ?? 0;
+        node.scrollTo({ left: nextOffset, behavior: "smooth" });
+        setActiveStep(bounded);
     };
 
     const nextSlide = () => {
-        scrollToIndex(currentIndex + 1);
+        scrollToStep(activeStep + 1);
     };
 
     const prevSlide = () => {
-        scrollToIndex(currentIndex - 1);
+        scrollToStep(activeStep - 1);
     };
+
+    const canGoPrev = activeStep > 0;
+    const canGoNext = activeStep < metrics.maxStep;
+    const showMobileHint = metrics.isMobile && canGoNext;
 
     return (
         <section className="space-y-6 md:space-y-8">
             <div className="flex items-start justify-between gap-4">
                 <div>
                     <h2
-                        className={`${syne.className} relative z-0 text-3xl font-extrabold uppercase tracking-[-0.03em] text-black sm:text-4xl md:text-5xl lg:text-6xl`}
+                        className={`${syne.className} relative z-0 text-3xl font-extrabold uppercase tracking-[-0.03em] text-black sm:text-3xl md:text-4xl lg:text-5xl`}
                     >
                         {category}
                     </h2>
@@ -108,8 +218,8 @@ function CategorySlider({ category, projects }: { category: Project["category"];
                     <button
                         type="button"
                         onClick={prevSlide}
-                        className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-black/15 text-black transition hover:bg-black hover:text-white disabled:opacity-30"
-                        disabled={currentIndex <= 0}
+                        className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-black/15 text-black transition hover:bg-black hover:text-white disabled:cursor-not-allowed disabled:opacity-30"
+                        disabled={!canGoPrev}
                         aria-label="Önceki"
                     >
                         ←
@@ -117,8 +227,8 @@ function CategorySlider({ category, projects }: { category: Project["category"];
                     <button
                         type="button"
                         onClick={nextSlide}
-                        className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-black/15 text-black transition hover:bg-black hover:text-white disabled:opacity-30"
-                        disabled={currentIndex >= maxIndex}
+                        className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-black/15 text-black transition hover:bg-black hover:text-white disabled:cursor-not-allowed disabled:opacity-30"
+                        disabled={!canGoNext}
                         aria-label="Sonraki"
                     >
                         →
@@ -126,21 +236,47 @@ function CategorySlider({ category, projects }: { category: Project["category"];
                 </div>
             </div>
 
-            <div
-                ref={sliderRef}
-                onScroll={syncCurrentIndex}
-                className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 [scrollbar-width:none] md:gap-8 [&::-webkit-scrollbar]:hidden"
-            >
-                {projects.map((project) => (
-                    <div key={project.id} className="w-[84vw] min-w-[84vw] snap-start md:w-[48vw] md:min-w-[48vw] lg:w-[calc((100%-4rem)/3)] lg:min-w-[calc((100%-4rem)/3)]">
-                        <ProjectCard project={project} />
-                    </div>
-                ))}
+            <div className="relative">
+                <div
+                    ref={sliderRef}
+                    onScroll={() => syncActiveStep()}
+                    className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 [scrollbar-width:none] [touch-action:pan-x] md:gap-8 [&::-webkit-scrollbar]:hidden"
+                >
+                    {projects.map((project) => (
+                        <div key={project.id} className="w-[86vw] min-w-[86vw] snap-start sm:w-[78vw] sm:min-w-[78vw] md:w-[48vw] md:min-w-[48vw] lg:w-[calc((100%-4rem)/3)] lg:min-w-[calc((100%-4rem)/3)]">
+                            <ProjectCard project={project} />
+                        </div>
+                    ))}
+                </div>
+
+                {showMobileHint && (
+                    <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-14 bg-linear-to-l from-white via-white/85 to-transparent" />
+                )}
             </div>
 
-            <p className="text-right text-xs font-medium tracking-[0.2em] text-black/55">
-                {currentIndex + 1} / {projects.length}
-            </p>
+            <div className="flex items-center justify-between gap-4">
+                <div className="md:hidden">
+                    {showMobileHint && (
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-black/50">
+                            Kaydırarak devam edin
+                        </p>
+                    )}
+                </div>
+
+                <div className="ml-auto flex items-center gap-3">
+                    <div className="flex items-center gap-1.5 md:hidden" aria-hidden="true">
+                        {Array.from({ length: metrics.totalSteps }).map((_, index) => (
+                            <span
+                                key={`${category}-step-${index}`}
+                                className={`h-1.5 rounded-full transition-all ${index === activeStep ? "w-5 bg-black/65" : "w-1.5 bg-black/20"}`}
+                            />
+                        ))}
+                    </div>
+                    <p className="text-right text-xs font-medium tracking-[0.2em] text-black/55">
+                        {activeStep + 1} / {metrics.totalSteps}
+                    </p>
+                </div>
+            </div>
         </section>
     );
 }
@@ -150,7 +286,7 @@ function QRGridSection({ category, projects }: { category: Project["category"]; 
         <section className="space-y-6 md:space-y-8">
             <div>
                 <h2
-                    className={`${syne.className} relative z-0 text-3xl font-extrabold uppercase tracking-[-0.03em] text-black sm:text-4xl md:text-5xl lg:text-6xl`}
+                    className={`${syne.className} relative z-0 text-3xl font-extrabold uppercase tracking-[-0.03em] text-black sm:text-3xl md:text-4xl lg:text-5xl`}
                 >
                     {category}
                 </h2>

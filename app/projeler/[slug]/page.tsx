@@ -14,6 +14,8 @@ import {
 import { memo, useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 import { PROJECTS_DATA, type LighthouseScores } from "@/lib/projects-data";
+import { ProjectCaseStudySection } from "@/components/sections/project-case-study";
+import { DemoBadge } from "@/components/ui/demo-badge";
 
 const syne = Syne({
     subsets: ["latin"],
@@ -231,6 +233,11 @@ export default function ProjeDetayPage() {
                         <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-black/40">
                             {project.category} — {project.client}
                         </p>
+                        {project.demoLabel && (
+                            <div className="mb-4">
+                                <DemoBadge label={project.demoLabel} />
+                            </div>
+                        )}
                         <motion.h1
                             className={`${syne.className} text-2xl font-extrabold uppercase leading-[0.9] tracking-[-0.03em] sm:text-4xl md:text-5xl lg:text-6xl`}
                         >
@@ -266,37 +273,7 @@ export default function ProjeDetayPage() {
                         <img src={project.image} alt={project.title} className="h-[70vh] w-full object-cover" />
                     </div>
 
-                    {/* Info cards — editorial grid, no shadow, sharp borders */}
-                    <div className="mt-px grid border-x border-b border-black/10 md:grid-cols-3">
-                        {[
-                            {
-                                num: "01",
-                                label: "PROJE AMACI",
-                                body: "Müşteri yolculuğunu sadeleştirip etkileşim kalitesini yükselterek net performans artışı sağlamak.",
-                            },
-                            {
-                                num: "02",
-                                label: "SÜREÇ",
-                                body: "Araştırma, bilgi mimarisi, tipografi kararları ve mikro etkileşimler paralel iterasyonlarla geliştirildi.",
-                            },
-                            {
-                                num: "03",
-                                label: "HİKAYEMİZ",
-                                body: "Güçlü görsel anlatı ile teknik doğruluğu birleştirerek markayı sıradanlıktan ayıran bir deneyim tasarladık.",
-                            },
-                        ].map((item, i) => (
-                            <article
-                                key={item.label}
-                                className={`p-6 md:p-7 ${i < 2 ? "border-b border-black/10 md:border-b-0 md:border-r" : ""}`}
-                            >
-                                <span className={`${syne.className} text-4xl font-extrabold text-black leading-none`}>
-                                    {item.num}
-                                </span>
-                                <p className="mt-3 text-[10px] font-bold uppercase tracking-[0.22em] text-black/40">{item.label}</p>
-                                <p className="mt-2 text-sm leading-relaxed text-black/70 md:text-[15px]">{item.body}</p>
-                            </article>
-                        ))}
-                    </div>
+                    <ProjectCaseStudySection project={project} />
 
                     {/* Performance section */}
                     <section className="mt-20 md:mt-24">
