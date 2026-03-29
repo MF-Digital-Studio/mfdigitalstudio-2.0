@@ -249,9 +249,6 @@ function CategorySlider({ category, projects }: { category: Project["category"];
                     ))}
                 </div>
 
-                {showMobileHint && (
-                    <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-14 bg-linear-to-l from-white via-white/85 to-transparent" />
-                )}
             </div>
 
             <div className="flex items-center justify-between gap-4">
