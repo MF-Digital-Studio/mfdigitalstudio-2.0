@@ -104,7 +104,7 @@ export function AboutPage() {
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
   return (
-    <div className="min-h-screen bg-white pt-24 pb-24 text-neutral-900">
+    <main className="min-h-screen bg-white pb-24 pt-24 text-neutral-900">
       {/* Hero block */}
       <div className="max-w-5xl mx-auto px-6 text-center py-20">
         <p className="text-electric-blue font-display text-sm tracking-[0.3em] uppercase mb-4 font-semibold">
@@ -290,6 +290,6 @@ export function AboutPage() {
         </h2>
         <SpotlightButton href="/iletisim" />
       </div>
-    </div>
+    </main>
   );
 }

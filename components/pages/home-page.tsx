@@ -9,7 +9,7 @@ import { FeaturedProjectsHorizontal } from "@/components/sections/featured-proje
 
 export function HomePage() {
   return (
-    <>
+    <main>
       {/* Hero */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-deep-black">
         <div className="absolute inset-0 overflow-hidden bg-gradient-to-br from-electric-blue/10 via-deep-black to-vibrant-purple/10" />
@@ -174,6 +174,6 @@ export function HomePage() {
           <SpotlightButton href="/iletisim" />
         </div>
       </section>
-    </>
+    </main>
   );
 }

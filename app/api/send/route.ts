@@ -1,33 +1,41 @@
 import { Resend } from "resend";
 import { NextRequest, NextResponse } from "next/server";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 type FormData = {
-    fullName: string;
-    email: string;
-    phone: string;
-    service: string;
-    serviceOther: string;
-    message: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  service: string;
+  serviceOther: string;
+  message: string;
 };
 
 const serviceLabels: Record<string, string> = {
-    web: "Web Sitesi Tasarımı",
-    panel: "Yönetim Paneli",
-    qr: "QR Menü Çözümleri",
-    seo: "SEO ve İçerik Optimizasyonu",
-    other: "Diğer",
+  web: "Web Sitesi Tasarımı",
+  panel: "Yönetim Paneli",
+  qr: "QR Menü Çözümleri",
+  seo: "SEO ve İçerik Optimizasyonu",
+  other: "Diğer",
 };
 
-function generateEmailHTML(data: FormData): string {
-    const selectedService = serviceLabels[data.service] || data.service;
-    const finalService =
-        data.service === "other" && data.serviceOther
-            ? `${selectedService}: ${data.serviceOther}`
-            : selectedService;
+function getResendClient() {
+  const apiKey = process.env.RESEND_API_KEY;
 
-    return `
+  if (!apiKey) {
+    return null;
+  }
+
+  return new Resend(apiKey);
+}
+
+function generateEmailHTML(data: FormData): string {
+  const selectedService = serviceLabels[data.service] || data.service;
+  const finalService =
+    data.service === "other" && data.serviceOther
+      ? `${selectedService}: ${data.serviceOther}`
+      : selectedService;
+
+  return `
 <!DOCTYPE html>
 <html>
 <head>
@@ -172,7 +180,7 @@ function generateEmailHTML(data: FormData): string {
     
     <div class="footer">
       <p>
-        Bu mesaj <a href="https://mfdigitalstudio.com">MF Digital Studio</a> teklif formundan gönderilmiştir.<br>
+        Bu mesaj <a href="https://www.mfdigitalstudio.com">MF Digital Studio</a> teklif formundan gönderilmiştir.<br>
         <strong>${escapeHtml(data.email)}</strong> adresinden geldi.
       </p>
     </div>
@@ -183,78 +191,88 @@ function generateEmailHTML(data: FormData): string {
 }
 
 function escapeHtml(unsafe: string): string {
-    return unsafe
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 
 export async function POST(request: NextRequest) {
-    try {
-        const data: FormData = await request.json();
+  try {
+    const data: FormData = await request.json();
 
-        // Validate required fields
-        if (
-            !data.fullName ||
-            !data.email ||
-            !data.phone ||
-            !data.service ||
-            !data.message
-        ) {
-            return NextResponse.json(
-                { error: "Tüm alanları doldurunuz." },
-                { status: 400 }
-            );
-        }
-
-        if (data.service === "other" && !data.serviceOther) {
-            return NextResponse.json(
-                { error: "Lütfen diğer hizmet konusunu belirtiniz." },
-                { status: 400 }
-            );
-        }
-
-        // Prepare email subject and HTML
-        const selectedService = serviceLabels[data.service] || data.service;
-        const finalService =
-            data.service === "other" && data.serviceOther
-                ? `${selectedService}: ${data.serviceOther}`
-                : selectedService;
-
-        const subject = `Yeni Teklif: ${finalService} - ${data.fullName}`;
-        const htmlContent = generateEmailHTML(data);
-
-        // Send email via Resend
-        const response = await resend.emails.send({
-            from: 'MF Digital Studio <bilgi@send.mfdigitalstudio.com>',
-            to: "info@mfdigitalstudio.com",
-            replyTo: data.email,
-            subject: subject,
-            html: htmlContent,
-        });
-
-        if (response.error) {
-            console.error("Resend error:", response.error);
-            return NextResponse.json(
-                { error: "E-posta gönderilemedi. Lütfen tekrar deneyin." },
-                { status: 500 }
-            );
-        }
-
-        return NextResponse.json(
-            {
-                success: true,
-                message: "Mesajınız başarıyla gönderildi. En kısa sürede sizinle iletişime geçeceğiz.",
-            },
-            { status: 200 }
-        );
-    } catch (error) {
-        console.error("API error:", error);
-        return NextResponse.json(
-            { error: "Sunucu hatası. Lütfen tekrar deneyin." },
-            { status: 500 }
-        );
+    // Validate required fields
+    if (
+      !data.fullName ||
+      !data.email ||
+      !data.phone ||
+      !data.service ||
+      !data.message
+    ) {
+      return NextResponse.json(
+        { error: "Tüm alanları doldurunuz." },
+        { status: 400 }
+      );
     }
+
+    if (data.service === "other" && !data.serviceOther) {
+      return NextResponse.json(
+        { error: "Lütfen diğer hizmet konusunu belirtiniz." },
+        { status: 400 }
+      );
+    }
+
+    // Prepare email subject and HTML
+    const selectedService = serviceLabels[data.service] || data.service;
+    const finalService =
+      data.service === "other" && data.serviceOther
+        ? `${selectedService}: ${data.serviceOther}`
+        : selectedService;
+
+    const subject = `Yeni Teklif: ${finalService} - ${data.fullName}`;
+    const htmlContent = generateEmailHTML(data);
+
+    const resend = getResendClient();
+
+    if (!resend) {
+      console.error("Resend API key is missing.");
+      return NextResponse.json(
+        { error: "E-posta servisi şu anda yapılandırılmadı. Lütfen daha sonra tekrar deneyin." },
+        { status: 500 }
+      );
+    }
+
+    // Send email via Resend
+    const response = await resend.emails.send({
+      from: 'MF Digital Studio <bilgi@send.mfdigitalstudio.com>',
+      to: "info@mfdigitalstudio.com",
+      replyTo: data.email,
+      subject: subject,
+      html: htmlContent,
+    });
+
+    if (response.error) {
+      console.error("Resend error:", response.error);
+      return NextResponse.json(
+        { error: "E-posta gönderilemedi. Lütfen tekrar deneyin." },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json(
+      {
+        success: true,
+        message: "Mesajınız başarıyla gönderildi. En kısa sürede sizinle iletişime geçeceğiz.",
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("API error:", error);
+    return NextResponse.json(
+      { error: "Sunucu hatası. Lütfen tekrar deneyin." },
+      { status: 500 }
+    );
+  }
 }

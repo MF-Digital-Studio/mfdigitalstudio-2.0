@@ -181,7 +181,7 @@ export function ContactPage() {
   };
 
   return (
-    <section className="min-h-screen bg-black px-6 pb-20 pt-24 md:pt-28">
+    <main className="min-h-screen bg-black px-6 pb-20 pt-24 md:pt-28">
       <div className="mx-auto w-full max-w-6xl">
         <div className="grid gap-8 border border-[#222] bg-black p-6 md:p-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-12">
           <div className="space-y-6">
@@ -419,6 +419,6 @@ export function ContactPage() {
           </div>
         </div>
       </div>
-    </section>
+    </main>
   );
 }

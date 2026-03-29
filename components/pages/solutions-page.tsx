@@ -47,7 +47,7 @@ export function SolutionsPage() {
   const [focusedCardId, setFocusedCardId] = useState<string | null>(null);
 
   return (
-    <div className="min-h-screen bg-deep-black pt-24 pb-24 relative">
+    <main className="relative min-h-screen bg-deep-black pb-24 pt-24">
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-20">
@@ -211,6 +211,6 @@ export function SolutionsPage() {
           </div>
         )}
       </div>
-    </div>
+    </main>
   );
 }

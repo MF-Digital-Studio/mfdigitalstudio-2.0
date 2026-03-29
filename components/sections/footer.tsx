@@ -26,7 +26,7 @@ const services = [
 
 const socialLinks = [
   { icon: Instagram, href: "https://www.instagram.com/mf.digitalstudio/", label: "Instagram" },
-  { icon: Linkedin, href: "http://linkedin.com/company/mfdigitalstudio", label: "LinkedIn" },
+  { icon: Linkedin, href: "https://www.linkedin.com/company/mfdigitalstudio", label: "LinkedIn" },
   { icon: Mail, href: "mailto:info@mfdigitalstudio.com", label: "Email" },
 ];
 
@@ -61,6 +61,7 @@ export function Footer() {
                   <a
                     key={social.label}
                     href={social.href}
+                    rel={social.href.startsWith("http") ? "noopener noreferrer" : undefined}
                     className="w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors"
                     aria-label={social.label}
                   >

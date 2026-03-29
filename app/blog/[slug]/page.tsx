@@ -1,269 +1,69 @@
-"use client";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { BlogDetailPage } from "@/components/pages/blog-detail-page";
+import { JsonLd } from "@/components/seo/json-ld";
+import { BLOG_DATA, getBlogPostBySlug } from "@/lib/blog-data";
+import { createArticleSchema, createBreadcrumbSchema, createPageMetadata } from "@/lib/seo";
 
-import Link from "next/link";
-import { Syne } from "next/font/google";
-import {
-    motion,
-    useMotionTemplate,
-    useMotionValue,
-    useSpring,
-} from "framer-motion";
-import { useMemo } from "react";
-import { useParams } from "next/navigation";
-
-const syne = Syne({ subsets: ["latin"], weight: ["700", "800"] });
-
-type BlogPost = {
-    id: number;
-    slug: string;
-    title: string;
-    category: string;
-    snippet: string;
-    date: string;
-    readTime: number;
-    image: string;
-    intro: string;
-    body: string[];
-    tags: string[];
+type PageProps = {
+    params: Promise<{ slug: string }>;
 };
 
-const BLOG_DATA: BlogPost[] = [
-    {
-        id: 1,
-        slug: "web-sitesi-gerekli-mi",
-        title: "BİR İŞLETME İÇİN WEB SİTESİ GERÇEKTEN GEREKLİ Mİ?",
-        category: "WEB SİTESİ",
-        snippet: "2026'da web sitesi olmayan işletme, adresi olmayan hayalet dükkân gibidir. Sosyal medyanın sunamadığı kontrol ve veri mülkiyeti.",
-        date: "20 Mart 2026",
-        readTime: 5,
-        image: "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?auto=format&fit=crop&w=1600&q=80",
-        intro: "2026 yılında bir web sitesine sahip olmamak, fiziksel dünyada adresi olmayan bir hayalet dükkân işletmeye benzer. Bugün işletmenizin 'Dijital Ana Karargahı' ve tek tapulu malıdır.",
-        body: [
-            "Eskiden web siteleri sadece bilgi veren statik sayfalar iken, bugün işletmenizin 'Dijital Ana Karargahı' ve tek tapulu malıdır. Sosyal medya platformları (Instagram, TikTok, LinkedIn) geçici trendler üzerine kuruludur ve bu mecraların algoritmaları tamamen sizin kontrolünüz dışındadır. Bir sabah uyandığınızda hesabınızın kapatıldığını veya erişiminizin kısıtlandığını görmek, tüm ticari varlığınızın silinmesi anlamına gelebilir. Web sitesi ise size bu platformların sunamadığı tam kontrolü ve veri mülkiyetini sağlar.",
-            "İkinci önemli nokta, yapay zekâ ve arama motorlarının evrimidir. Google'ın yeni nesil arama motoru (SGE) ve ChatGPT gibi asistanlar, kullanıcıya bir işletmeyi önerirken sosyal medya postlarını değil, o işletmenin resmi web sitesindeki yapılandırılmış verileri (schema markup) referans alır. Sitenizdeki detaylı hizmet tanımları, hakkımızda yazıları ve teknik veriler, yapay zekâya 'Bu işletme güvenilirdir ve aranan kriterlere uygundur' sinyalini verir. Siteniz yoksa, yapay zekâ tarafından keşfedilme ve önerilme şansınız neredeyse sıfırdır.",
-            "Ayrıca, kullanıcı alışkanlıkları 2026'da daha seçici hale geldi. Bir müşteri sosyal medyada bir reklam gördüğünde, satın alma kararı vermeden önce mutlaka markanın profesyonel bir web sitesi olup olmadığını kontrol eder. Bu, bir 'kimlik kontrolü'dür. Web sitesi, markanızın kurumsallığını, vizyonunu ve sunduğunuz değer önerisinin ciddiyetini kanıtlar. Modern bir site; sadece bir arayüz değil, müşteriyle kurulan ilk güven bağıdır.",
-            "Son olarak, web sitesi size benzersiz bir veri analitiği sunar. Sosyal medyada sadece beğeni ve yorum sayılarını görürken, kendi sitenizde ziyaretçinin hangi üründe ne kadar süre geçirdiğini, hangi aşamada satın almaktan vazgeçtiğini ve nereden geldiğini en ince ayrıntısına kadar takip edebilirsiniz. Bu veri, işletmenizin büyüme stratejisini belirleyen en kıymetli hazinedir. Kendi verisine sahip olmayan bir işletme, karanlıkta yolunu bulmaya çalışan bir yolcu gibidir.",
-        ],
-        tags: ["Web Sitesi", "Dijital Varlık", "Veri Mülkiyeti", "2026"],
-    },
-    {
-        id: 2,
-        slug: "instagram-yeterli-mi",
-        title: "SADECE INSTAGRAM İLE MÜŞTERİLERE ULAŞMAK MÜMKÜN MÜ?",
-        category: "SOSYAL MEDYA",
-        snippet: "Instagram harika bir vitrin — ama sürdürülebilir bir satış kanalı değil. 2026'da kiralık mülkün tuzakları ve kalıcı çözüm.",
-        date: "17 Mart 2026",
-        readTime: 6,
-        image: "/instagram-blog.jpg",
-        intro: "Bu soruya 2026 perspektifinden cevabımız nettir: Mümkündür ama sürdürülebilir ve ölçeklenebilir değildir. Instagram işletmeniz için harika bir vitrin ve keşif kanalıdır — ancak burası gerçek satışı kapatmaz.",
-        body: [
-            "Instagram, işletmeniz için harika bir vitrin ve etkileşim kanalıdır. Görselliğin gücüyle insanları etkileyebilir, markanızın 'ruhunu' yansıtabilirsiniz. Ancak Instagram bir satış kanalı olmaktan ziyade bir keşif kanalıdır. Bir kullanıcı sizi orada keşfeder, ancak gerçek bir alışveriş deneyimi veya kurumsal iş birliği için daha güvenli, daha detaylı bir liman arar.",
-            "Instagram'ın en büyük handikabı 'içerik ömrü'dür. Bir gönderi paylaştığınızda, bu içerik en fazla 24-48 saat boyunca hedef kitlenizin karşısına çıkar, sonra dijital çöplükteki yerini alır. Oysa web sitenizde yayınladığınız kaliteli bir blog yazısı veya ürün incelemesi, arama motorları sayesinde yıllarca size ücretsiz ve organik müşteri çekmeye devam eder. Instagram'da her gün yeni içerik üretmek zorunda olduğunuz bir 'içerik çarkı'na mahkumken, web sitesi size pasif bir müşteri akışı sağlar.",
-            "Güvenlik ve sahiplik konusu ise bu işin en kritik boyutudur. Sosyal medya platformları birer 'kiralık mülk'tür. 2026 yılında platform politikalarının ne kadar sertleştiğini, reklam maliyetlerinin nasıl devasa boyutlara ulaştığını görüyoruz. Sadece Instagram üzerinden satış yapmaya çalışmak, dükkanınızın anahtarını her an kural değiştirebilen bir ev sahibine teslim etmek gibidir. Müşteri listenizi sosyal medyadan dışarı çıkaramazsınız; ancak web sitesi üzerinden kendi sadık müşteri topluluğunuzu oluşturabilirsiniz.",
-            "Satış psikolojisi açısından baktığımızda; Instagram daha çok 'dürtüsel alışverişe' hitap eder. Ancak yüksek fiyatlı veya profesyonel hizmet gerektiren işlerde müşteri, bir profil sayfasından fazlasını görmek ister. Kullanıcılar ödeme yapmadan önce SSL sertifikalı, profesyonelce tasarlanmış ve kullanıcı sözleşmeleri net bir web sitesini görmeye ihtiyaç duyarlar. Özetle; Instagram kapıyı açar, web sitesi ise içeri buyur edip masaya oturtur ve satışı kapatır.",
-        ],
-        tags: ["Instagram", "Sosyal Medya", "Kiralık Mülk", "İçerik Stratejisi"],
-    },
-    {
-        id: 3,
-        slug: "google-ust-siralara-cikmak",
-        title: "GOOGLE'DA ÜST SIRALARA ÇIKMAK İÇİN TEMEL ADIMLAR",
-        category: "SEO",
-        snippet: "2026 SEO standartları: E-E-A-T, sesli arama, yapılandırılmış veri. Anahtar kelime doldurmak artık işe yaramıyor, ceza getiriyor.",
-        date: "14 Mart 2026",
-        readTime: 7,
-        image: "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&w=1600&q=80",
-        intro: "Google'ın algoritmaları 2026 yılında artık çok daha insansı ve zeki. Eski nesil 'anahtar kelime doldurma' taktikleri artık sadece işe yaramamakla kalmıyor, sitenizin cezalandırılmasına da neden oluyor.",
-        body: [
-            "Bugünün SEO'su (Arama Motoru Optimizasyonu) tamamen Kullanıcı Deneyimi (UX) ve Anlamsal İçerik üzerine kurulu. İlk adım, sitenizin teknik altyapısının kusursuz olmasıdır. Google, 1 saniyenin altında açılmayan, mobil cihazlarda kaymalar yaşanan veya karmaşık bir navigasyona sahip siteleri doğrudan eliyor.",
-            "İkinci adım, E-E-A-T (Deneyim, Uzmanlık, Otorite, Güven) prensibidir. Google artık içeriği kimin yazdığına ve bu kişinin o konuda ne kadar yetkin olduğuna bakıyor. Blog yazılarınızda sadece bilgi vermeyin; kişisel tecrübelerinizi, vaka analizlerinizi ve gerçek müşteri deneyimlerinizi paylaşın. Yapay zekâ tarafından üretilen standart metinler yerine, markanıza özgü bir 'ses tonu' ve derinliği olan içerikler üretmelisiniz. Unutmayın, Google sizin o konunun uzmanı olduğunuzu hissetmek istiyor.",
-            "Üçüncü kritik faktör, Sesli Arama ve Doğal Dil İşleme (NLP) optimizasyonudur. 2026'da insanlar 'en iyi tesisatçı' diye arama yapmak yerine, telefonlarına 'Hey Siri, evimdeki su sızıntısını en hızlı kim tamir edebilir?' diye soruyor. Bu yüzden içeriklerinizde soru-cevap formatlarına yer vermeli ve insanların günlük hayatta kullandığı doğal konuşma dilini hedeflemelisiniz. FAQ (Sık Sorulan Sorular) sayfaları, bugün SEO'nun en güçlü silahlarından biri haline gelmiştir.",
-            "Son olarak, Yapılandırılmış Veri (Schema Markup) kullanımı teknik SEO'nun kalbidir. Arama motoru botlarına sitenizin bir ürün mü, bir makale mi yoksa yerel bir dükkân mı olduğunu özel kod parçalarıyla söylemelisiniz. Bu sayede Google aramalarında yıldızlı puanlar, fiyat bilgileri veya stok durumu gibi 'zengin sonuçlar' (rich snippets) ile görünürsünüz. Bu hem tıklanma oranınızı artırır hem de algoritmanın sizi rakiplerinizden ayırmasını sağlar.",
-        ],
-        tags: ["SEO", "E-E-A-T", "Sesli Arama", "Schema Markup"],
-    },
-    {
-        id: 4,
-        slug: "web-sitesi-satis-arttirir",
-        title: "İYİ BİR WEB SİTESİ NEDEN SATIŞ ARTIRIR?",
-        category: "DÖNÜŞÜM",
-        snippet: "Dijital sürtünmeyi azaltmak, kişiselleştirme, 7/24 chatbot ve psikolojik tetikleyiciler — satışın arkasındaki gerçek formül.",
-        date: "10 Mart 2026",
-        readTime: 6,
-        image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1600&q=80",
-        intro: "Bir web sitesinin satışları artırmasının arkasında yatan temel sebep, dijital dünyadaki 'sürtünmeyi' azaltmasıdır. Satış sürecindeki sürtünme; müşterinin kafasındaki soru işaretleri, teknik aksaklıklar veya ödeme zorluklarıdır.",
-        body: [
-            "Profesyonel bir site, bu engelleri tek tek ortadan kaldırır. Müşteri sitenize girdiğinde aradığı bilgiye saniyeler içinde ulaşabiliyorsa, ürün resimleri yüksek kalitedeyse ve kullanıcı yorumları güven veriyorsa, satın alma kararını çok daha hızlı verir.",
-            "2026'da satış artışının bir diğer anahtarı Kişiselleştirme'dir. Modern web siteleri artık her ziyaretçiye aynı şeyi göstermiyor. Bir ziyaretçinin daha önceki aramalarına veya sitenizdeki hareketlerine göre ona özel teklifler sunan (AI destekli) bir yapı, dönüşüm oranlarını dramatik şekilde artırır. Müşteri 'Beni anlıyorlar' hissine kapıldığı an, sadık bir müşteriye dönüşür. Bu düzeyde bir kişiselleştirmeyi sosyal medya platformlarında yapmanız mümkün değildir.",
-            "Ayrıca, iyi bir web sitesi 7/24 kesintisiz satış temsilcisi gibi çalışır. Gelişmiş yapay zekâ tabanlı chatbotlar, müşterinin en zor teknik sorularını gece yarısı bile yanıtlayabilir, stok bilgisi verebilir ve ödeme adımına kadar rehberlik edebilir. İnsan iş gücüne ihtiyaç duymadan, aynı anda binlerce kişiye hizmet verebilme kapasitesi, işletmenizin cirosunu fiziksel sınırların çok ötesine taşır.",
-            "Son olarak, Psikolojik Tetikleyiciler web sitesi tasarımında satışın gizli formülüdür. 'Sınırlı Stok', 'Son 24 Saat' gibi geri sayım sayaçları veya 'Şu an bu ürünü 5 kişi inceliyor' gibi sosyal kanıtlar, müşteriyi harekete geçmeye zorlar. Profesyonel bir kullanıcı arayüzü (UI) ve kullanıcı deneyimi (UX) tasarımı, ziyaretçiyi yormadan, onu sezgisel olarak 'Sepete Ekle' butonuna yönlendirir. Satış, doğru tasarlanmış bir yolculuğun doğal bir sonucudur.",
-        ],
-        tags: ["Dönüşüm", "Kişiselleştirme", "UX/UI", "Chatbot"],
-    },
-    {
-        id: 5,
-        slug: "kucuk-isletme-dijital-yatirim",
-        title: "KÜÇÜK İŞLETMELER İÇİN EN MANTIKLI DİJİTAL YATIRIM NEDİR?",
-        category: "STRATEJİ",
-        snippet: "Her kuruşun ROI sağlaması gerektiğinde en akıllı seçim: yerel SEO, içerik pazarlaması ve e-posta — reklama mahkum olmadan büyümek.",
-        date: "6 Mart 2026",
-        readTime: 5,
-        image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1600&q=80",
-        intro: "Küçük işletmeler için bütçe kısıtlıdır ve her kuruşun maksimum getiri (ROI) sağlaması gerekir. 2026'da yapılabilecek en büyük hata, tüm bütçeyi günübirlik reklamlara gömmektir.",
-        body: [
-            "Reklamı durdurduğunuz an müşteri akışı da kesilir. Bu yüzden en mantıklı yatırım, 'Hibrit Dijital Varlık' stratejisidir: Yani sağlam bir web sitesi altyapısı ile desteklenmiş Yerel SEO ve İçerik Pazarlaması.",
-            "Yerel SEO, özellikle fiziksel bir konumu olan veya belirli bir bölgeye hizmet veren işletmeler için 'altın yumurtlayan tavuk'tur. Google İşletme Profilinizi optimize etmek ve web sitenizi yerel anahtar kelimelerle beslemek, sizi o bölgede arama yapanların doğrudan karşısına çıkarır. Üstelik bu trafik tamamen ücretsizdir. Bir kez üst sıraya yerleştiğinizde, reklam bütçesi harcamadan dükkanınıza müşteri çekmeye devam edersiniz.",
-            "Bir diğer akıllıca yatırım ise E-Posta Pazarlaması ve Veri Toplama sistemidir. Web sitenize gelen ziyaretçilerin iletişim bilgilerini küçük bir indirim veya değerli bir rehber karşılığında almak, size doğrudan erişebileceğiniz bir kitle verir. 2026'da reklam maliyetleri bu kadar yüksekken, elinizdeki mevcut kitleye ücretsiz bir bülten göndererek tekrar satış yapmak, yeni bir müşteri kazanmaktan 7 kat daha ucuzdur.",
-            "Özetle, küçük bir işletme devasa bir yazılım ekibi kurmamalı; ancak güven veren, hızlı ve mobil uyumlu bir web sitesini merkeze alarak, bunu yerel SEO ve değerli içerik üretimiyle beslemelidir. Bu, bir 'gider' değil, işletmenizin piyasa değerini artıran bir 'yatırım'dır. Dijital dünyada yerinizi sağlamlaştırmak, rüzgarın yönüne göre savrulmanızı engeller.",
-        ],
-        tags: ["Yerel SEO", "E-Posta Pazarlaması", "ROI", "Küçük İşletme"],
-    },
-    {
-        id: 6,
-        slug: "yapay-zeka-web-sitesi",
-        title: "YAPAY ZEKÂ ALGORİTMALARININ İŞLETMENİZİ TANIMASI İÇİN WEB SİTESİ ŞART MI?",
-        category: "YAPAY ZEKÂ",
-        snippet: "ChatGPT, Gemini ve Apple Intelligence artık satın alma asistanı. Yapay zekânın sizi önermesi için web sitenizde doğru veri şart.",
-        date: "2 Mart 2026",
-        readTime: 6,
-        image: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?auto=format&fit=crop&w=1600&q=80",
-        intro: "2026 yılında ticaretin yeni kapı eşiği 'AI Optimization' (Yapay Zekâ Optimizasyonu) oldu. ChatGPT, Gemini, Claude ve Apple Intelligence gibi sistemler artık kullanıcıların 'satın alma asistanı' gibi çalışıyor.",
-        body: [
-            "Bir kullanıcı 'Bana İstanbul'daki en güvenilir ve hızlı kargo şirketini bul' dediğinde, yapay zekâ tüm interneti saniyeler içinde tarar. Eğer bu tarama sırasında sizin web sitenizde AI botlarının okuyabileceği net veriler yoksa, siz o listede asla yer alamazsınız.",
-            "Yapay zekâ algoritmaları 'bilgi boşluğunu' sevmez. Sosyal medya platformlarındaki bilgiler parçalıdır ve genellikle botlar tarafından tam olarak indekslenemez. Ancak bir web sitesi, yapay zekâya işletmenizin DNA'sını sunar. Sitenizdeki teknik makaleler, detaylı ürün açıklamaları ve servis kapsamları, yapay zekânın sizi bir 'otorite' olarak kodlamasını sağlar. AI sizi ne kadar iyi tanırsa, potansiyel müşterilere o kadar yüksek sesle önerir.",
-            "Ayrıca, 2026'da web siteleri sadece veri sunmakla kalmıyor, AI-Ready (Yapay Zekâya Hazır) kod yapıları kullanıyor. 'Linked Data' denilen teknoloji sayesinde, işletmenizin adresinden yetkilisine, sunduğu garantilerden müşteri memnuniyet oranlarına kadar her şey makineler tarafından okunabilir hale getiriliyor. Bu teknik altyapı bir web sitesi olmadan kurulamaz. Siteniz yoksa, yapay zekânın gözünde 'bilinmeyen bir değişken' olarak kalırsınız.",
-            "Sonuç olarak; yapay zekâ çağında web sitesi artık bir tercih değil, bir veri köprüsüdür. Sizinle potansiyel müşterileriniz arasında duran bu asistanlara doğru bilgiyi beslemek zorundasınız. İşletmenizin gelecekteki büyüme hızı, yapay zekâya ne kadar iyi bir 'kaynak' sunduğunuza doğrudan bağlı olacaktır. Dijital dünyada 'görünür' olmak istiyorsanız, önce makinelerin sizi anlamasını sağlamalısınız.",
-        ],
-        tags: ["Yapay Zekâ", "AI Optimization", "Schema Markup", "Linked Data"],
-    },
-];
-
-/* --- Spotlight CTA --- */
-function SpotlightCTA() {
-    const rawX = useMotionValue(50);
-    const rawY = useMotionValue(50);
-    const x = useSpring(rawX, { stiffness: 240, damping: 30, mass: 0.6 });
-    const y = useSpring(rawY, { stiffness: 240, damping: 30, mass: 0.6 });
-    const flare = useMotionTemplate`radial-gradient(220px circle at ${x}% ${y}%, rgba(255,255,255,0.9), rgba(255,255,255,0.28) 42%, rgba(255,255,255,0) 74%)`;
-
-    return (
-        <motion.div style={{ backgroundImage: flare }} className="relative rounded-full p-px">
-            <Link
-                href="/iletisim"
-                className="block overflow-hidden rounded-full border border-black/15 bg-black"
-                onMouseMove={(e) => {
-                    const rect = e.currentTarget.getBoundingClientRect();
-                    rawX.set(Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100)));
-                    rawY.set(Math.max(0, Math.min(100, ((e.clientY - rect.top) / rect.height) * 100)));
-                }}
-                onMouseLeave={() => { rawX.set(50); rawY.set(50); }}
-            >
-                <span className="flex items-center justify-center rounded-full bg-black px-8 py-4 text-sm font-bold uppercase tracking-[0.16em] text-white md:px-10 md:py-5">
-                    BİZE ULAŞIN
-                </span>
-            </Link>
-        </motion.div>
-    );
+export function generateStaticParams() {
+    return BLOG_DATA.map((post) => ({ slug: post.slug }));
 }
 
-/* --- Page --- */
-export default function BlogDetailPage() {
-    const params = useParams<{ slug: string }>();
-    const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug;
-
-    const post = useMemo(
-        () => BLOG_DATA.find((p) => p.slug === slug),
-        [slug],
-    );
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+    const { slug } = await params;
+    const post = getBlogPostBySlug(slug);
 
     if (!post) {
-        return (
-            <main className="flex min-h-screen items-center justify-center bg-white px-6 text-black">
-                <div className="text-center">
-                    <h1 className="text-3xl font-bold">Yazı bulunamadı</h1>
-                    <p className="mt-3 text-black/60">Aradığınız blog yazısı mevcut değil.</p>
-                    <Link
-                        href="/blog"
-                        className="mt-8 inline-flex rounded-full border border-black/20 px-6 py-3 text-lg font-semibold transition hover:bg-black/5"
-                    >
-                        Tüm Yazılara Dön
-                    </Link>
-                </div>
-            </main>
-        );
+        return createPageMetadata({
+            title: "Yazı bulunamadı",
+            description: "Aradığınız blog yazısı bulunamadı.",
+            path: `/blog/${slug}`,
+            noIndex: true,
+        });
+    }
+
+    return createPageMetadata({
+        title: post.title,
+        description: post.snippet,
+        path: `/blog/${post.slug}`,
+        image: post.image,
+    });
+}
+
+export default async function BlogPostPage({ params }: PageProps) {
+    const { slug } = await params;
+    const post = getBlogPostBySlug(slug);
+
+    if (!post) {
+        notFound();
     }
 
     return (
-        <main className="min-h-screen bg-white text-black">
-            <motion.div layoutId={post.slug} className="min-h-screen bg-white">
-                <article className="mx-auto w-full max-w-384 px-6 pb-32 pt-24 md:px-10 md:pt-28">
-
-                    {/* Back link */}
-                    <Link
-                        href="/blog"
-                        className="inline-flex text-lg uppercase tracking-[0.16em] text-black/40 transition hover:text-black"
-                    >
-                        &larr; TÜM YAZILAR
-                    </Link>
-
-                    {/* Header */}
-                    <header className="mt-10">
-                        <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.24em] text-black/40">
-                            {post.category} &mdash; {post.date} &mdash; {post.readTime} DK OKUMA
-                        </p>
-                        <h1 className={`${syne.className} text-2xl font-extrabold uppercase leading-[0.92] tracking-[-0.025em] sm:text-3xl md:text-4xl lg:text-6xl`}>
-                            {post.title}
-                        </h1>
-                        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-black/55">
-                            {post.intro}
-                        </p>
-                    </header>
-
-                    {/* Hero image */}
-                    <div className="mt-12 overflow-hidden rounded-2xl border border-black/8">
-                        <img
-                            src={post.image}
-                            alt={post.title}
-                            className="aspect-video w-full object-cover"
-                        />
-                    </div>
-
-                    {/* Divider */}
-                    <div className="mt-16 border-t border-black/10" />
-
-                    {/* Prose body */}
-                    <div className="mx-auto mt-14 max-w-[72ch]">
-                        <div className="prose prose-lg prose-neutral prose-headings:font-extrabold prose-headings:tracking-tight prose-p:leading-[1.85] prose-p:text-black/75 prose-strong:text-black">
-                            {post.body.map((paragraph, i) => (
-                                <p key={i}>{paragraph}</p>
-                            ))}
-                        </div>
-
-                        {/* Tags */}
-                        <div className="mt-12 flex flex-wrap gap-2">
-                            {post.tags.map((tag) => (
-                                <span
-                                    key={tag}
-                                    className="rounded-full border border-black/12 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-black/45"
-                                >
-                                    {tag}
-                                </span>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* CTA */}
-                    <div className="mx-auto mt-20 flex max-w-[72ch] justify-start">
-                        <Link
-                            href="/iletisim"
-                            className="group relative w-64 px-6 py-3 cursor-pointer rounded-lg bg-black text-white font-display font-bold text-base tracking-tight transition-colors duration-200 ease-out border border-black hover:bg-white hover:text-black focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-black active:scale-95 flex items-center justify-center"
-                        >
-                            <span>Projeye Başlayalım</span>
-                        </Link>
-                    </div>
-
-                </article>
-            </motion.div>
-        </main>
+        <>
+            <JsonLd
+                id="blog-post-breadcrumb"
+                data={createBreadcrumbSchema([
+                    { name: "Ana Sayfa", path: "/" },
+                    { name: "Blog", path: "/blog" },
+                    { name: post.title, path: `/blog/${post.slug}` },
+                ])}
+            />
+            <JsonLd
+                id="blog-post-article"
+                data={createArticleSchema({
+                    title: post.title,
+                    description: post.snippet,
+                    path: `/blog/${post.slug}`,
+                    image: post.image,
+                    publishedAt: post.publishedAt,
+                    tags: post.tags,
+                })}
+            />
+            <BlogDetailPage post={post} />
+        </>
     );
 }

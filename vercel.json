@@ -1,5 +1,40 @@
 {
   "buildCommand": "npm run build",
   "installCommand": "npm install",
-  "framework": "nextjs"
+  "framework": "nextjs",
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "mfdigitalstudio.com"
+        }
+      ],
+      "destination": "https://www.mfdigitalstudio.com/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "mfdigital.studio"
+        }
+      ],
+      "destination": "https://www.mfdigitalstudio.com/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.mfdigital.studio"
+        }
+      ],
+      "destination": "https://www.mfdigitalstudio.com/$1",
+      "permanent": true
+    }
+  ]
 }
