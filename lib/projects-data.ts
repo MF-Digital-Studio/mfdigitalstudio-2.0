@@ -108,7 +108,7 @@ export const PROJECTS_DATA: Project[] = [
     {
         id: 2,
         slug: "yusuf-ali-soykan-gayrimenkul",
-        title: "YUSUF ALİ SOYKAN GAYRİMENKUL",
+        title: "GAYRİMENKUL PORTFÖY VİTRİNİ",
         category: "WEB SİTELERİ",
         client: "Yusuf Ali Soykan",
         summary: "Yusuf Ali Soykan’ın uzmanlığını, güven veren marka kimliğini ve danışmanlık yaklaşımını dijitale taşıyan; başarılar, sertifikalar ve içeriklerle desteklenen profesyonel bir web sitesi tasarladık.",
