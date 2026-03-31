@@ -6,6 +6,8 @@ import emlakWallpaper from "@/assets/emlak-wallpaper.png";
 import emlakInner from "@/assets/emlak-inner.png";
 import gayrimenkulWallpaper from "@/assets/gayrimenkul-wallpaper.png";
 import gayrimenkulInner from "@/assets/gayrimenkul-inner.png";
+import lumiereMobile from "@/assets/lumiere-mobile.png";
+import lumiereWallpaper from "@/assets/lumiere-wallpaper.png";
 import norteWallpaper from "@/assets/norte-wallpaper.png";
 import norteInner from "@/assets/norte-inner.png";
 import qrWallpaper from "@/assets/qr-wallpaper.png";
@@ -149,6 +151,55 @@ export const PROJECTS_DATA: Project[] = [
                 content: [
                     "Ortaya, Yusuf Ali Soykan’ın profesyonel kimliğini dijitalde daha güçlü yansıtan ve ziyaretçilerin güvenle iletişime geçmesini destekleyen bütüncül bir web deneyimi çıktı.",
                     "Kişisel marka algısı, uzmanlık sunumu ve içerik yapısı daha tutarlı hale geldi.",
+                ],
+            },
+        ],
+    },
+    {
+        id: 6,
+        slug: "lumiere-estetik",
+        title: "LUMIÈRE",
+        category: "WEB SİTELERİ",
+        client: "Lumière Estetik",
+        summary: "Lumière Estetik için; premium klinik atmosferini, uzman kadroyu ve kişiye özel bakım protokollerini rafine bir dijital deneyimde buluşturan bir web sitesi tasarladık.",
+        image: lumiereWallpaper.src,
+        innerImage: lumiereMobile.src,
+        lighthouse: { performance: 100, accessibility: 91, bestPractices: 100, seo: 100 },
+        previewUrl: "https://lumiere-estetik-inky.vercel.app/",
+        gradient: "from-rose-500/40 via-amber-200/35 to-stone-200/30",
+        demoLabel: "Portföy Projesi",
+        stats: [
+            { label: "Deneyim", value: 10, suffix: "+" },
+            { label: "Mutlu Danışan", value: 10000, suffix: "+" },
+            { label: "Memnuniyet", value: 98, suffix: "%" },
+        ],
+        detailSections: [
+            {
+                title: "Proje Özeti",
+                content: [
+                    "Lumière Estetik için, kliniğin premium görünümünü ve güven veren uzmanlık yaklaşımını dijitalde güçlü biçimde yansıtan bir web deneyimi tasarladık.",
+                    "Hizmetler, klinik yaklaşımı, uzman kadro ve iletişim akışını tek bir bütünlük içinde bir araya getirerek daha rafine bir dijital vitrin oluşturduk.",
+                ],
+            },
+            {
+                title: "Hedef",
+                content: [
+                    "Amacımız, ziyaretçilerin Lumière'in doğal güzellik anlayışını ilk temas anında hissedebilmesini; hizmetleri, teknolojik altyapıyı ve randevu adımlarını zahmetsizce keşfedebilmesini sağlamaktı.",
+                    "Aynı zamanda premium klinik algısını destekleyen, güven veren ve dönüşüm odaklı bir yapı kurmayı hedefledik.",
+                ],
+            },
+            {
+                title: "Yaklaşımımız",
+                content: [
+                    "Tasarım dilini; yumuşak görsel geçişler, seçkin tipografi ve sakin bir içerik akışı üzerine kurduk.",
+                    "Lazer epilasyon, medikal cilt bakımı ve bölgesel incelme gibi hizmetleri öne çıkarırken, uzmanlık ve teknoloji vurgusunu dönüşüm noktalarıyla dengeli biçimde konumlandırdık.",
+                ],
+            },
+            {
+                title: "Ortaya Çıkan Değer",
+                content: [
+                    "Ortaya, Lumière Estetik'in marka algısını dijitalde güçlendiren ve ziyaretçiyi bilgi alma ile randevu aksiyonuna akıcı biçimde taşıyan bütüncül bir web deneyimi çıktı.",
+                    "Klinik artık premium hizmet anlayışını, uzmanlığını ve güven veren yapısını dijitalde daha tutarlı biçimde sunuyor.",
                 ],
             },
         ],
@@ -301,7 +352,6 @@ export const PROJECTS_DATA: Project[] = [
             },
         ],
     },
-
     {
         id: 10,
         slug: "restoran-qr",

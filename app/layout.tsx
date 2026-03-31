@@ -8,6 +8,10 @@ import { Footer } from '@/components/sections/footer'
 import { createOrganizationSchema, createWebsiteSchema, siteConfig } from '@/lib/seo'
 import './globals.css'
 
+const defaultMetaTitle = 'MF Digital Studio | Sıradanlığı Unutun, Dijitalde Zirveye Çıkın'
+const defaultMetaDescription = 'Özel web tasarımı, yönetim panelleri ve SEO çözümleriyle markanızı dijitalde profesyonel bir görünüme kavuşturuyoruz.'
+const defaultSocialImage = '/og-image.png'
+
 const geist = Geist({
   subsets: ["latin"],
   variable: "--font-geist",
@@ -22,10 +26,10 @@ const syne = Syne({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: siteConfig.name,
+    default: defaultMetaTitle,
     template: `%s | ${siteConfig.name}`,
   },
-  description: siteConfig.description,
+  description: defaultMetaDescription,
   applicationName: siteConfig.name,
   alternates: {
     canonical: '/',
@@ -35,20 +39,20 @@ export const metadata: Metadata = {
     locale: siteConfig.locale,
     url: siteConfig.url,
     siteName: siteConfig.name,
-    title: siteConfig.name,
-    description: siteConfig.description,
+    title: defaultMetaTitle,
+    description: defaultMetaDescription,
     images: [
       {
-        url: siteConfig.defaultOgImage,
-        alt: siteConfig.name,
+        url: defaultSocialImage,
+        alt: defaultMetaTitle,
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: siteConfig.name,
-    description: siteConfig.description,
-    images: [siteConfig.defaultTwitterImage],
+    title: defaultMetaTitle,
+    description: defaultMetaDescription,
+    images: [defaultSocialImage],
   },
   robots: {
     index: true,

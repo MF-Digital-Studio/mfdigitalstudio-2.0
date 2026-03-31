@@ -18,7 +18,7 @@ export const siteConfig = {
     shortName: "MF Digital Studio",
     url: "https://www.mfdigitalstudio.com",
     description:
-        "MF Digital Studio; özel web siteleri, yönetim panelleri, QR menüler ve teknik SEO altyapısıyla markaların dijitalde daha güçlü görünmesini sağlar.",
+        "Özel web tasarımı, yönetim panelleri ve SEO çözümleriyle markanızı dijitalde profesyonel bir görünüme kavuşturuyoruz.",
     locale: "tr_TR",
     email: "info@mfdigitalstudio.com",
     phoneNumbers: ["+90 537 033 95 56", "+90 531 660 40 02"],
@@ -26,8 +26,8 @@ export const siteConfig = {
         "https://www.instagram.com/mf.digitalstudio/",
         "https://www.linkedin.com/company/mfdigitalstudio",
     ],
-    defaultOgImage: "/opengraph-image",
-    defaultTwitterImage: "/twitter-image",
+    defaultOgImage: "/og-image.png",
+    defaultTwitterImage: "/og-image.png",
 } as const;
 
 function ensureLeadingSlash(pathname: string) {
@@ -74,27 +74,27 @@ export function createPageMetadata({
         },
         robots: noIndex
             ? {
-                  index: false,
-                  follow: false,
-                  googleBot: {
-                      index: false,
-                      follow: false,
-                      "max-image-preview": "large",
-                      "max-snippet": -1,
-                      "max-video-preview": -1,
-                  },
-              }
+                index: false,
+                follow: false,
+                googleBot: {
+                    index: false,
+                    follow: false,
+                    "max-image-preview": "large",
+                    "max-snippet": -1,
+                    "max-video-preview": -1,
+                },
+            }
             : {
-                  index: true,
-                  follow: true,
-                  googleBot: {
-                      index: true,
-                      follow: true,
-                      "max-image-preview": "large",
-                      "max-snippet": -1,
-                      "max-video-preview": -1,
-                  },
-              },
+                index: true,
+                follow: true,
+                googleBot: {
+                    index: true,
+                    follow: true,
+                    "max-image-preview": "large",
+                    "max-snippet": -1,
+                    "max-video-preview": -1,
+                },
+            },
         openGraph: {
             type: "website",
             locale: siteConfig.locale,
