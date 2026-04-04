@@ -21,7 +21,7 @@ export const siteConfig = {
         "Özel web tasarımı, yönetim panelleri ve SEO çözümleriyle markanızı dijitalde profesyonel bir görünüme kavuşturuyoruz.",
     locale: "tr_TR",
     email: "info@mfdigitalstudio.com",
-    phoneNumbers: ["+90 537 033 95 56", "+90 531 660 40 02"],
+    phoneNumbers: ["+90 501 654 68 61", "+90 531 660 40 02"],
     socialLinks: [
         "https://www.instagram.com/mf.digitalstudio/",
         "https://www.linkedin.com/company/mfdigitalstudio",

@@ -5,6 +5,7 @@ import { Navbar } from '@/components/navbar'
 import { CookieBanner } from '@/components/cookie-banner'
 import { JsonLd } from '@/components/seo/json-ld'
 import { Footer } from '@/components/sections/footer'
+import { WhatsAppFab } from '@/components/whatsapp-fab'
 import { createOrganizationSchema, createWebsiteSchema, siteConfig } from '@/lib/seo'
 import './globals.css'
 
@@ -85,6 +86,7 @@ export default function RootLayout({
         <Navbar />
         {children}
         <Footer />
+        <WhatsAppFab />
         <CookieBanner />
         <Analytics />
       </body>

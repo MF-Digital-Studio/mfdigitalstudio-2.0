@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { AlertCircle, CheckCircle2, Loader2, Mail, MessageSquare, Phone } from "lucide-react";
+import { WhatsAppIcon, WHATSAPP_URL } from "@/components/whatsapp-fab";
+import { AlertCircle, ArrowUpRight, CheckCircle2, Loader2, Mail, MessageSquare, Phone } from "lucide-react";
 
 type FormValues = {
   fullName: string;
@@ -209,19 +210,41 @@ export function ContactPage() {
                 <div className="flex h-10 w-10 items-center justify-center rounded-md border border-[#222] bg-black">
                   <Phone className="h-4 w-4" />
                 </div>
-                <span>+90 537 033 95 56</span>
-              </div>
-              <div className="flex items-center gap-3 text-sm text-white/65">
-                <div className="flex h-10 w-10 items-center justify-center rounded-md border border-[#222] bg-black">
-                  <Phone className="h-4 w-4" />
-                </div>
-                <span>+90 531 660 40 02</span>
+                <span>+90 501 654 68 61</span>
               </div>
               <div className="flex items-center gap-3 text-sm text-white/65">
                 <div className="flex h-10 w-10 items-center justify-center rounded-md border border-[#222] bg-black">
                   <MessageSquare className="h-4 w-4" />
                 </div>
                 <span>24 saat içinde geri dönüş</span>
+              </div>
+            </div>
+
+            <div className="rounded-2xl border border-[#25D366]/30 bg-[#07150d] p-5 shadow-[0_0_0_1px_rgba(37,211,102,0.05)]">
+              <div className="flex items-start gap-4">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white">
+                  <WhatsAppIcon className="h-6 w-6 text-[#25D366]" />
+                </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#8BE7B0]">
+                    WhatsApp Hattı
+                  </p>
+                  <h2 className="mt-2 font-display text-xl font-bold text-white">
+                    Hızlıca WhatsApp&apos;tan ulaşın
+                  </h2>
+                  <p className="mt-2 text-sm leading-relaxed text-white/70">
+                    Kısa bir mesaj bırakın, projeniz için en uygun çözümü birlikte planlayalım.
+                  </p>
+                  <a
+                    href={WHATSAPP_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-4 inline-flex items-center gap-2 rounded-full bg-[#25D366] px-4 py-2 text-sm font-semibold text-black transition hover:brightness-110"
+                  >
+                    WhatsApp&apos;a Git
+                    <ArrowUpRight className="h-4 w-4" />
+                  </a>
+                </div>
               </div>
             </div>
           </div>
