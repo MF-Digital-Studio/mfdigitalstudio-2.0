@@ -5,7 +5,7 @@ import { Syne } from "next/font/google";
 import { motion } from "framer-motion";
 import { BLOG_DATA, type BlogPost } from "@/lib/blog-data";
 
-const syne = Syne({ subsets: ["latin"], weight: ["700", "800"] });
+const syne = Syne({ subsets: ["latin", "latin-ext"], weight: ["700", "800"] });
 
 function BlogCard({
     post,

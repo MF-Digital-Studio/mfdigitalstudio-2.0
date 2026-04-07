@@ -76,7 +76,7 @@
 }
 
 @theme inline {
-  --font-sans: var(--font-geist), 'Geist', 'Geist Fallback';
+  --font-sans: var(--font-dm-sans), 'DM Sans', sans-serif;
   --font-display: var(--font-syne), 'Syne', sans-serif;
   --font-mono: 'Geist Mono', 'Geist Mono Fallback';
   --color-electric-blue: oklch(0.65 0.25 250);
@@ -129,9 +129,41 @@
 
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+  }
+
+  button,
+  input,
+  textarea,
+  select,
+  option,
+  label,
+  p,
+  span,
+  a,
+  li,
+  small,
+  strong,
+  em,
+  blockquote,
+  figcaption,
+  td,
+  th,
+  dd,
+  dt {
+    font-family: inherit;
   }
 
   .font-display {
+    font-family: inherit;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-display);
   }
 }

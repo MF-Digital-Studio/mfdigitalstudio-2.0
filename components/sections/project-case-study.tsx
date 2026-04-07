@@ -2,7 +2,7 @@ import { Syne } from "next/font/google";
 import type { Project, ProjectDetailSection, ProjectDetailSectionTitle } from "@/lib/projects-data";
 
 const syne = Syne({
-    subsets: ["latin"],
+    subsets: ["latin", "latin-ext"],
     weight: ["700", "800"],
 });
 

@@ -4,12 +4,16 @@ import coffeeWallpaper from "@/assets/coffee-wallpaper.png";
 import coffeeInner from "@/assets/coffee-inner.png";
 import emlakWallpaper from "@/assets/emlak-wallpaper.png";
 import emlakInner from "@/assets/emlak-inner.png";
+import formaMobile from "@/assets/forma-mobile.png";
+import formaWallpaper from "@/assets/forma-wallpaper.png";
 import gayrimenkulWallpaper from "@/assets/gayrimenkul-wallpaper.png";
 import gayrimenkulInner from "@/assets/gayrimenkul-inner.png";
 import lumiereMobile from "@/assets/lumiere-mobile.png";
 import lumiereWallpaper from "@/assets/lumiere-wallpaper.png";
 import norteWallpaper from "@/assets/norte-wallpaper.png";
 import norteInner from "@/assets/norte-inner.png";
+import nuansMobile from "@/assets/nuans-mobile.png";
+import nuansWallpaper from "@/assets/nuans-wallpaper.png";
 import qrWallpaper from "@/assets/qr-wallpaper.png";
 import qrInner from "@/assets/qr-inner.png";
 import qrPanelInner from "@/assets/qr-panel-inner.png";
@@ -353,6 +357,104 @@ export const PROJECTS_DATA: Project[] = [
         ],
     },
     {
+        id: 7,
+        slug: "forma",
+        title: "FORMA",
+        category: "WEB SİTELERİ",
+        client: "FORMA",
+        summary: "FORMA için; dengeli formlar ve doğal dokularla kurduğu marka dilini dijitale taşıyan, koleksiyon keşfini ve ürün hikayelerini akıcı bir akışta birleştiren premium bir web sitesi tasarladık.",
+        image: formaWallpaper.src,
+        innerImage: formaMobile.src,
+        lighthouse: { performance: 98, accessibility: 93, bestPractices: 100, seo: 100 },
+        previewUrl: "https://forma-mobilya.vercel.app/",
+        gradient: "from-slate-700/45 via-zinc-400/30 to-stone-200/30",
+        demoLabel: "Portföy Projesi",
+        stats: [
+            { label: "SEO", value: 171, suffix: "%" },
+            { label: "Performans", value: 129, suffix: "%" },
+            { label: "Memnuniyet", value: 97, suffix: "%" },
+        ],
+        detailSections: [
+            {
+                title: "Proje Özeti",
+                content: [
+                    "FORMA için, markanın 'denge, malzeme ve tasarım' odağını dijitalde güçlü biçimde yansıtan bir vitrin deneyimi tasarladık.",
+                    "Öne çıkan parçalar, mekana göre seçimler ve koleksiyon akışını tek bir bütünlükte kurgulayarak ürün keşfini daha sezgisel hale getirdik.",
+                ],
+            },
+            {
+                title: "Hedef",
+                content: [
+                    "Amacımız, ziyaretçilerin FORMA'nın sakin ve karakterli marka tonunu ilk temas anında hissetmesini; ürünlere, kategorilere ve marka hikayesine zahmetsizce ulaşabilmesini sağlamaktı.",
+                    "Aynı zamanda ürün inceleme ve iletişim adımlarını görünür kılarak dönüşüm odaklı, güven veren bir deneyim oluşturmayı hedefledik.",
+                ],
+            },
+            {
+                title: "Yaklaşımımız",
+                content: [
+                    "Tasarım dilini; geniş nefes alan boşluklar, güçlü görsel çerçeveler ve okunaklı tipografik hiyerarşi üzerine kurduk.",
+                    "Koleksiyon yapısını oturma, yemek, yatak ve çalışma alanı gibi kullanım senaryoları etrafında sadeleştirerek mobilde de akıcı bir keşif deneyimi sunduk.",
+                ],
+            },
+            {
+                title: "Ortaya Çıkan Değer",
+                content: [
+                    "Ortaya, FORMA'nın premium ürün algısını dijitalde güçlendiren ve ziyaretçiyi ürün keşfinden aksiyona akıcı biçimde taşıyan bütüncül bir web deneyimi çıktı.",
+                    "Marka artık koleksiyonlarını daha tutarlı bir anlatıyla sunarken, kullanıcılar da ihtiyaç duydukları ürünlere daha hızlı ve güvenli biçimde erişebiliyor.",
+                ],
+            },
+        ],
+    },
+    {
+        id: 8,
+        slug: "nuans",
+        title: "NUANS",
+        category: "WEB SİTELERİ",
+        client: "NUANS",
+        summary: "NUANS için; iç mimari uzmanlığını, özel mobilya yaklaşımını ve proje vitrini akışını tek bir premium anlatıda birleştiren etkileyici bir web deneyimi tasarladık.",
+        image: nuansWallpaper.src,
+        innerImage: nuansMobile.src,
+        lighthouse: { performance: 93, accessibility: 90, bestPractices: 100, seo: 100 },
+        previewUrl: "https://nuans-mimarlik.vercel.app/",
+        gradient: "from-neutral-700/45 via-stone-400/30 to-amber-200/30",
+        demoLabel: "Portföy Projesi",
+        stats: [
+            { label: "SEO", value: 167, suffix: "%" },
+            { label: "Performans", value: 124, suffix: "%" },
+            { label: "Memnuniyet", value: 96, suffix: "%" },
+        ],
+        detailSections: [
+            {
+                title: "Proje Özeti",
+                content: [
+                    "NUANS için, 'Mekanları tasarlamıyoruz, deneyimler yaratıyoruz' yaklaşımını dijitalde hissettiren güçlü bir marka deneyimi tasarladık.",
+                    "Seçilmiş çalışmalar, hizmet modülleri ve iletişim akışını bütüncül bir yapıda birleştirerek hem ilham veren hem de aksiyona yönlendiren bir vitrin oluşturduk.",
+                ],
+            },
+            {
+                title: "Hedef",
+                content: [
+                    "Amacımız, ziyaretçilerin NUANS'ın iç mimari, özel mobilya, 3D görselleştirme ve anahtar teslim hizmetlerini ilk bakışta net biçimde kavrayabilmesini sağlamaktı.",
+                    "Aynı zamanda proje portföyünü görünür kılarak güven algısını güçlendiren ve iletişime geçişi hızlandıran bir yapı kurmayı hedefledik.",
+                ],
+            },
+            {
+                title: "Yaklaşımımız",
+                content: [
+                    "Tasarım kurgusunu; hikaye anlatımı güçlü hero alanı, servis odaklı içerik blokları ve referans projelerle desteklenen katmanlı bir akış üzerine inşa ettik.",
+                    "Minimal görsel dil ve net bilgi mimarisiyle kullanıcıyı keşiften proje detaylarına, oradan da iletişim adımına doğal bir ritimde taşıdık.",
+                ],
+            },
+            {
+                title: "Ortaya Çıkan Değer",
+                content: [
+                    "Ortaya, NUANS'ın premium konumunu dijitalde daha güçlü yansıtan ve markanın uzmanlık alanlarını anlaşılır şekilde görünür kılan bütüncül bir web deneyimi çıktı.",
+                    "Marka artık portföyünü ve hizmetlerini daha etkili sunarken, potansiyel müşteriler de karar ve iletişim aşamasına daha hızlı ilerleyebiliyor.",
+                ],
+            },
+        ],
+    },
+    {
         id: 10,
         slug: "restoran-qr",
         title: "RESTORAN QR MENÜ",
@@ -404,4 +506,4 @@ export const PROJECTS_DATA: Project[] = [
 
 export const CATEGORIES: ProjectCategory[] = ["WEB SİTELERİ", "QR MENÜ"];
 
-export const FEATURED_PROJECTS = PROJECTS_DATA.slice(0, 5);
+export const FEATURED_PROJECTS = PROJECTS_DATA.filter((project) => project.category === "WEB SİTELERİ");

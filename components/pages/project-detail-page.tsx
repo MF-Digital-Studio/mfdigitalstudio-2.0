@@ -17,7 +17,7 @@ import { DemoBadge } from "@/components/ui/demo-badge";
 import type { LighthouseScores, Project } from "@/lib/projects-data";
 
 const syne = Syne({
-    subsets: ["latin"],
+    subsets: ["latin", "latin-ext"],
     weight: ["700", "800"],
 });
 
@@ -288,7 +288,7 @@ export function ProjectDetailPage({ project }: { project: Project }) {
                                     {project.lighthouse ? (
                                         <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
                                             {LIGHTHOUSE_METRICS.map(({ key, label }) => (
-                                                <LighthouseScoreBadge key={key} label={label} score={project.lighthouse[key]} />
+                                                <LighthouseScoreBadge key={key} label={label} score={project.lighthouse![key]} />
                                             ))}
                                         </div>
                                     ) : (

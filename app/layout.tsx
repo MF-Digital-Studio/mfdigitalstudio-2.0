@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Geist, Syne } from 'next/font/google'
+import { DM_Sans, Syne } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { Navbar } from '@/components/navbar'
 import { CookieBanner } from '@/components/cookie-banner'
@@ -13,13 +13,14 @@ const defaultMetaTitle = 'MF Digital Studio | Sıradanlığı Unutun, Dijitalde 
 const defaultMetaDescription = 'Özel web tasarımı, yönetim panelleri ve SEO çözümleriyle markanızı dijitalde profesyonel bir görünüme kavuşturuyoruz.'
 const defaultSocialImage = '/og-image.png'
 
-const geist = Geist({
-  subsets: ["latin"],
-  variable: "--font-geist",
+const dmSans = DM_Sans({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-dm-sans",
+  display: "swap",
 });
 
 const syne = Syne({
-  subsets: ["latin"],
+  subsets: ["latin", "latin-ext"],
   variable: "--font-syne",
   weight: ["400", "500", "600", "700", "800"],
 });
@@ -81,7 +82,7 @@ export default function RootLayout({
 
   return (
     <html lang="tr">
-      <body className={`${geist.variable} ${syne.variable} font-sans antialiased bg-black`}>
+      <body className={`${dmSans.className} ${dmSans.variable} ${syne.variable} antialiased bg-black`}>
         <JsonLd id="site-structured-data" data={structuredData} />
         <Navbar />
         {children}

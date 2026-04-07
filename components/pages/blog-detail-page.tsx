@@ -5,7 +5,7 @@ import { Syne } from "next/font/google";
 import { motion, useMotionTemplate, useMotionValue, useSpring } from "framer-motion";
 import type { BlogPost } from "@/lib/blog-data";
 
-const syne = Syne({ subsets: ["latin"], weight: ["700", "800"] });
+const syne = Syne({ subsets: ["latin", "latin-ext"], weight: ["700", "800"] });
 
 function SpotlightCTA() {
     const rawX = useMotionValue(50);

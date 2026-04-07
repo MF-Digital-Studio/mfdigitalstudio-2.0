@@ -8,7 +8,7 @@ import { CATEGORIES, PROJECTS_DATA, type Project } from "@/lib/projects-data";
 import { DemoBadge } from "@/components/ui/demo-badge";
 
 const syne = Syne({
-    subsets: ["latin"],
+    subsets: ["latin", "latin-ext"],
     weight: ["700", "800"],
 });
 
