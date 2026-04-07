@@ -11,7 +11,8 @@ import './globals.css'
 
 const defaultMetaTitle = 'MF Digital Studio | Sıradanlığı Unutun, Dijitalde Zirveye Çıkın'
 const defaultMetaDescription = 'Özel web tasarımı, yönetim panelleri ve SEO çözümleriyle markanızı dijitalde profesyonel bir görünüme kavuşturuyoruz.'
-const defaultSocialImage = '/og-image.png'
+const defaultOpenGraphImage = '/opengraph-image'
+const defaultTwitterImage = '/twitter-image'
 
 const dmSans = DM_Sans({
   subsets: ["latin", "latin-ext"],
@@ -45,7 +46,7 @@ export const metadata: Metadata = {
     description: defaultMetaDescription,
     images: [
       {
-        url: defaultSocialImage,
+        url: defaultOpenGraphImage,
         alt: defaultMetaTitle,
       },
     ],
@@ -54,7 +55,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: defaultMetaTitle,
     description: defaultMetaDescription,
-    images: [defaultSocialImage],
+    images: [defaultTwitterImage],
   },
   robots: {
     index: true,

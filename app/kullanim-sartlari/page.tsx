@@ -4,8 +4,8 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { createBreadcrumbSchema, createPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = createPageMetadata({
-    title: "Kullanım Şartları",
-    description: "MF Digital Studio kullanım şartları. Web sitemizi kullanırken uymanız gereken koşulları açıklar.",
+    title: "Kullanım Şartları | MF Digital Studio",
+    description: "MF Digital Studio kullanım şartları: web sitesinin kullanımına ilişkin kurallar, sorumluluklar ve yasal koşullar.",
     path: "/kullanim-sartlari",
 });
 

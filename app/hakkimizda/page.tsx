@@ -3,8 +3,8 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { createBreadcrumbSchema, createPageMetadata } from "@/lib/seo";
 
 export const metadata = createPageMetadata({
-    title: "Hakkımızda",
-    description: "MF Digital Studio'nun yaklaşımını, çalışma prensiplerini ve markalara sunduğu dijital deneyim vizyonunu keşfedin.",
+    title: "Hakkımızda | MF Digital Studio",
+    description: "MF Digital Studio’nun çalışma yaklaşımını, uzmanlık alanlarını ve dijital çözüm anlayışını keşfedin.",
     path: "/hakkimizda",
 });
 

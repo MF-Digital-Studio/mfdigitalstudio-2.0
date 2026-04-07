@@ -26,8 +26,8 @@ export const siteConfig = {
         "https://www.instagram.com/mf.digitalstudio/",
         "https://www.linkedin.com/company/mfdigitalstudio",
     ],
-    defaultOgImage: "/og-image.png",
-    defaultTwitterImage: "/og-image.png",
+    defaultOgImage: "/opengraph-image",
+    defaultTwitterImage: "/twitter-image",
 } as const;
 
 function ensureLeadingSlash(pathname: string) {
@@ -65,6 +65,7 @@ export function createPageMetadata({
     const canonical = ensureLeadingSlash(path);
     const absoluteUrl = getAbsoluteUrl(canonical);
     const metadataImage = resolveMetadataImage(image);
+    const metadataTwitterImage = image ? metadataImage : siteConfig.defaultTwitterImage;
 
     return {
         title,
@@ -113,7 +114,7 @@ export function createPageMetadata({
             card: "summary_large_image",
             title,
             description,
-            images: [metadataImage],
+            images: [metadataTwitterImage],
         },
     };
 }

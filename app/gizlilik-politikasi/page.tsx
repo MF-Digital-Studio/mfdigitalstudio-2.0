@@ -4,8 +4,8 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { createBreadcrumbSchema, createPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = createPageMetadata({
-    title: "Gizlilik Politikası",
-    description: "MF Digital Studio gizlilik politikası. Kişisel verilerinizin nasıl toplandığını, işlendiğini ve korunduğunu açıklar.",
+    title: "Gizlilik Politikası | MF Digital Studio",
+    description: "MF Digital Studio gizlilik politikası: kişisel verilerin toplanması, işlenmesi ve korunmasına ilişkin esaslar.",
     path: "/gizlilik-politikasi",
 });
 

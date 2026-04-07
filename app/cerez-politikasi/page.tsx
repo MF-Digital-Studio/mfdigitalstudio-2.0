@@ -4,8 +4,8 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { createBreadcrumbSchema, createPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = createPageMetadata({
-    title: "Çerez Politikası",
-    description: "MF Digital Studio çerez politikası. Hangi çerezleri kullandığımızı ve çerez tercihlerinizi nasıl yönetebileceğinizi açıklar.",
+    title: "Çerez Politikası | MF Digital Studio",
+    description: "MF Digital Studio çerez politikası: kullanılan çerez türleri, amaçları ve tercih yönetimi hakkında bilgiler.",
     path: "/cerez-politikasi",
 });
 

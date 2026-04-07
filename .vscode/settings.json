@@ -1,0 +1,12 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^Get-Location; Test-Path \"c:\\\\Users\\\\faruk\\\\Desktop\\\\MF Digital Studio\\\\mfdigitalstudio-2\\.0\\\\node_modules\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^Select-String -Path \"\\.next\\\\server\\\\app-paths-manifest\\.json\", \"\\.next\\\\app-path-routes-manifest\\.json\", \"\\.next\\\\routes-manifest\\.json\" -Pattern \"opengraph-image\\|twitter-image\" \\| ForEach-Object \\{ \"\\{0\\}:\\{1\\}\" -f \\$_\\.Path, \\$_\\.Line\\.Trim\\(\\) \\}$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}

@@ -27,8 +27,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     }
 
     return createPageMetadata({
-        title: post.title,
-        description: post.snippet,
+        title: `${post.title} | MF Digital Studio Blog`,
+        description: `${post.title} hakkında özet bilgiler ve uygulanabilir içgörüler. Web tasarım, SEO ve dijital büyüme odağında içerik.`,
         path: `/blog/${post.slug}`,
         image: post.image,
     });

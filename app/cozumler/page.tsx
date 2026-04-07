@@ -3,8 +3,8 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { createBreadcrumbSchema, createPageMetadata } from "@/lib/seo";
 
 export const metadata = createPageMetadata({
-    title: "Çözümler",
-    description: "Özel web siteleri, yönetim panelleri, QR menüler ve teknik SEO çözümlerimizi keşfedin.",
+    title: "Dijital Çözümler | Web Tasarım, QR Menü ve SEO",
+    description: "İşletmenize özel web tasarım, QR menü, yönetim paneli ve teknik SEO çözümlerimizi tek sayfada keşfedin.",
     path: "/cozumler",
 });
 

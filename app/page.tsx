@@ -3,9 +3,9 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { createPageMetadata, createProfessionalServiceSchema } from "@/lib/seo";
 
 export const metadata = createPageMetadata({
-  title: "Özel Web Sitesi, QR Menü ve Dijital Çözümler",
+  title: "MF Digital Studio | Web Tasarım, SEO ve Dijital Çözümler",
   description:
-    "MF Digital Studio; özel web siteleri, yönetim panelleri, QR menüler ve teknik SEO altyapısıyla markaların dijitalde daha güçlü görünmesini sağlar.",
+    "MF Digital Studio; web tasarım, teknik SEO, QR menü ve özel dijital çözümlerle markaların dijitalde daha güçlü görünmesine yardımcı olur.",
   path: "/",
 });
 
