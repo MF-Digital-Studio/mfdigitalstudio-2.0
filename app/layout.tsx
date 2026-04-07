@@ -8,6 +8,7 @@ import { Footer } from '@/components/sections/footer'
 import { WhatsAppFab } from '@/components/whatsapp-fab'
 import { createOrganizationSchema, createWebsiteSchema, siteConfig } from '@/lib/seo'
 import './globals.css'
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const defaultMetaTitle = 'MF Digital Studio | Sıradanlığı Unutun, Dijitalde Zirveye Çıkın'
 const defaultMetaDescription = 'Özel web tasarımı, yönetim panelleri ve SEO çözümleriyle markanızı dijitalde profesyonel bir görünüme kavuşturuyoruz.'
@@ -88,6 +89,7 @@ export default function RootLayout({
         <Navbar />
         {children}
         <Footer />
+        <SpeedInsights />
         <WhatsAppFab />
         <CookieBanner />
         <Analytics />
