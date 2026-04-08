@@ -6,8 +6,6 @@ import emlakWallpaper from "@/assets/emlak-wallpaper.png";
 import emlakInner from "@/assets/emlak-inner.png";
 import formaMobile from "@/assets/forma-mobile.png";
 import formaWallpaper from "@/assets/forma-wallpaper.png";
-import gayrimenkulWallpaper from "@/assets/gayrimenkul-wallpaper.png";
-import gayrimenkulInner from "@/assets/gayrimenkul-inner.png";
 import lumiereMobile from "@/assets/lumiere-mobile.png";
 import lumiereWallpaper from "@/assets/lumiere-wallpaper.png";
 import norteWallpaper from "@/assets/norte-wallpaper.png";
@@ -107,54 +105,6 @@ export const PROJECTS_DATA: Project[] = [
                 content: [
                     "Ortaya, Atölye Norte’nin karakterini dijitalde güçlü biçimde yansıtan, menü ve şube deneyimini akıcı hale getiren premium bir web sitesi çıktı.",
                     "Marka artık ziyaretçilerine hem estetik hem de işlevsel açıdan daha tutarlı bir dijital deneyim sunuyor.",
-                ],
-            },
-        ],
-    },
-    {
-        id: 2,
-        slug: "yusuf-ali-soykan-gayrimenkul",
-        title: "GAYRİMENKUL PORTFÖY VİTRİNİ",
-        category: "WEB SİTELERİ",
-        client: "Yusuf Ali Soykan",
-        summary: "Yusuf Ali Soykan’ın uzmanlığını, güven veren marka kimliğini ve danışmanlık yaklaşımını dijitale taşıyan; başarılar, sertifikalar ve içeriklerle desteklenen profesyonel bir web sitesi tasarladık.",
-        image: gayrimenkulWallpaper.src,
-        innerImage: gayrimenkulInner.src,
-        lighthouse: { performance: 99, accessibility: 90, bestPractices: 100, seo: 91 },
-        previewUrl: "https://yusufalisoykan-gayrimenkul.vercel.app/",
-        gradient: "from-emerald-600/40 via-teal-300/30 to-lime-200/30",
-        stats: [
-            { label: "SEO", value: 143, suffix: "%" },
-            { label: "Performans", value: 118, suffix: "%" },
-            { label: "Memnuniyet", value: 98, suffix: "%" },
-        ],
-        detailSections: [
-            {
-                title: "Proje Özeti",
-                content: [
-                    "Yusuf Ali Soykan için, kişisel marka algısını güçlendiren ve danışmanlık hizmetlerini profesyonel biçimde sunan kurumsal bir web sitesi tasarladık.",
-                    "Hakkında bilgileri, ödüller, sertifikalar ve blog içeriklerini tek bir yapıda bir araya getirerek daha güçlü bir dijital vitrin oluşturduk.",
-                ],
-            },
-            {
-                title: "Hedef",
-                content: [
-                    "Amacımız, ziyaretçilerin danışman hakkında güven verici ve bütünlüklü bir izlenim edinmesini; deneyim, başarılar ve içerikler üzerinden uzmanlığı net biçimde görebilmesini sağlamaktı. ",
-                    "Aynı zamanda iletişime geçişi kolaylaştıran sade ve profesyonel bir yapı oluşturmayı hedefledik.",
-                ],
-            },
-            {
-                title: "Yaklaşımımız",
-                content: [
-                    "Tasarımı; güçlü tipografi, sade bilgi akışı ve güven odaklı içerik hiyerarşisi üzerine kurduk.",
-                    " Kişisel marka anlatısını öne çıkarırken, ödül ve sertifikaları destekleyici güven unsurları; blog içeriklerini ise uzmanlığı pekiştiren bir yapı içinde konumlandırdık.",
-                ],
-            },
-            {
-                title: "Ortaya Çıkan Değer",
-                content: [
-                    "Ortaya, Yusuf Ali Soykan’ın profesyonel kimliğini dijitalde daha güçlü yansıtan ve ziyaretçilerin güvenle iletişime geçmesini destekleyen bütüncül bir web deneyimi çıktı.",
-                    "Kişisel marka algısı, uzmanlık sunumu ve içerik yapısı daha tutarlı hale geldi.",
                 ],
             },
         ],
