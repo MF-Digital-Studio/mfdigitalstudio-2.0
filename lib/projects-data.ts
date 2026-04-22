@@ -1,9 +1,9 @@
-import atelierWallpaper from "@/assets/atelier-wallpaper.png";
+﻿import atelierWallpaper from "@/assets/atelier-wallpaper.png";
 import atelierInner from "@/assets/atelier-inner.png";
+import atesWallpaper from "@/assets/ates-wallpaper.png";
+import atesInner from "@/assets/ates-inner.png";
 import coffeeWallpaper from "@/assets/coffee-wallpaper.png";
 import coffeeInner from "@/assets/coffee-inner.png";
-import emlakWallpaper from "@/assets/emlak-wallpaper.png";
-import emlakInner from "@/assets/emlak-inner.png";
 import formaMobile from "@/assets/forma-mobile.png";
 import formaWallpaper from "@/assets/forma-wallpaper.png";
 import lumiereMobile from "@/assets/lumiere-mobile.png";
@@ -61,6 +61,55 @@ export type Project = {
 };
 
 export const PROJECTS_DATA: Project[] = [
+    {
+        id: 11,
+        slug: "ates-burger-pizza",
+        title: "ATEŞ BURGER & PIZZA",
+        category: "WEB SİTELERİ",
+        client: "Ateş Burger & Pizza",
+        summary: "Ateş Burger & Pizza'nın hızlı ve lezzetli fast food deneyimini dijitale taşıyan; menü sunumu, sipariş ve marka atmosferini akıcı bir akışta buluşturan bir web sitesi tasarladık.",
+        image: atesWallpaper.src,
+        innerImage: atesInner.src,
+        lighthouse: { performance: 90, accessibility: 96, bestPractices: 100, seo: 100 },
+        previewUrl: "https://ates-fast-food.vercel.app/",
+        gradient: "from-orange-600/45 via-red-500/30 to-yellow-300/30",
+        demoLabel: "Portföy Projesi",
+        stats: [
+            { label: "SEO", value: 175, suffix: "%" },
+            { label: "Performans", value: 130, suffix: "%" },
+            { label: "Memnuniyet", value: 98, suffix: "%" },
+        ],
+        detailSections: [
+            {
+                title: "Proje Özeti",
+                content: [
+                    "Ateş Burger & Pizza için, fast food franchise'ın dinamik ve sıcak atmosferini dijitalde güçlü biçimde yansıtan bir web deneyimi tasarladık.",
+                    "Menü sunumu, restoran bilgileri ve hızlı sipariş erişimini tek bir bütünlük içinde bir araya getirerek daha çekici bir dijital vitrin oluşturduk.",
+                ],
+            },
+            {
+                title: "Hedef",
+                content: [
+                    "Amacımız, ziyaretçilerin Ateş Burger & Pizza'nın lezzetli ve dinamik misyonunu ilk temas anında hissedebilmesini; menüye kolayca ulaşmasını ve sipariş sürecini minimum adımla tamamlayabilmesini sağlamaktı.",
+                    "Aynı zamanda franchise konumunu dijitalde daha güçlü ve tutarlı biçimde yansıtmayı hedefledik.",
+                ],
+            },
+            {
+                title: "Yaklaşımımız",
+                content: [
+                    "Tasarım dilini; sıcak ve enerjetik renk tonları, güçlü tipografi ve sade içerik akışı üzerine kurduk.",
+                    "Menü kategorilerini anlaşılır biçimde sunarken, sipariş ve iletişim noktalarını vurgulayan bir deneyim tasarladık.",
+                ],
+            },
+            {
+                title: "Ortaya Çıkan Değer",
+                content: [
+                    "Ortaya, Ateş Burger & Pizza'nın dinamik marka algısını dijitalde güçlendiren ve müşterileri menüden sipariş aksiyonuna akıcı biçimde taşıyan bütüncül bir web deneyimi çıktı.",
+                    "Franchise artık dijitalde de hızlı, lezzetli ve güven veren bir görünüm sunarak müşteri çekim kapasitesini artırıyor.",
+                ],
+            },
+        ],
+    },
     {
         id: 1,
         slug: "atolye-norte",
@@ -253,55 +302,6 @@ export const PROJECTS_DATA: Project[] = [
                 content: [
                     "Ortaya, Koro Coffee’nin dijital görünümünü güçlendiren ve kullanıcıyı doğru aksiyonlara akıcı biçimde yönlendiren bir deneyim çıktı.",
                     "Menü inceleme, rezervasyon ve marka algısı artık tek bir yapıda daha güçlü ve tutarlı şekilde sunuluyor.",
-                ],
-            },
-        ],
-    },
-    {
-        id: 5,
-        slug: "emlak-portfoy-vitrini",
-        title: "EMLAK PORTFÖY VİTRİNİ",
-        category: "WEB SİTELERİ",
-        client: "Emlak Portföy",
-        summary: "Nova Emlak için, portföylerin yayınlanmasını ve yönetilmesini kolaylaştıran deneyimi göstermek amacıyla; kullanıcı arayüzü ve admin panelini bir araya getiren konsept bir emlak platformu tasarladık.",
-        image: emlakWallpaper.src,
-        innerImage: emlakInner.src,
-        lighthouse: { performance: 100, accessibility: 90, bestPractices: 100, seo: 91 },
-        previewUrl: "https://gayrimenkul-demo.vercel.app/",
-        gradient: "from-sky-600/40 via-cyan-300/30 to-slate-200/30",
-        demoLabel: "Portföy Projesi",
-        stats: [
-            { label: "SEO", value: 176, suffix: "%" },
-            { label: "Performans", value: 132, suffix: "%" },
-            { label: "Memnuniyet", value: 96, suffix: "%" },
-        ],
-        detailSections: [
-            {
-                title: "Proje Özeti",
-                content: [
-                    "Nova Emlak, emlak ilanlarının modern bir vitrin yapısında sunulmasını ve yönetim paneli üzerinden kolayca yönetilmesini göstermek için kurgulanmış konsept bir demo projedir. ",
-                    "Kullanıcı tarafında portföy keşfini, yönetim tarafında ise ilan kontrolünü sadeleştiren bütüncül bir yapı üzerine tasarlanmıştır.",
-                ],
-            },
-            {
-                title: "Hedef",
-                content: [
-                    "Bu projede amaç, modern bir emlak platformunda kullanıcı deneyimi ile yönetim tarafının nasıl bir araya getirilebileceğini göstermekti.",
-                    "İlanların keşfedilebilirliğini artıran, aynı zamanda yönetim paneliyle içerik kontrolünü kolaylaştıran bir yapı kurgulandı.",
-                ],
-            },
-            {
-                title: "Yaklaşımımız",
-                content: [
-                    "Tasarımı; sade bilgi mimarisi, güçlü filtreleme mantığı ve okunabilir içerik akışı üzerine kurduk.",
-                    "Demo yapıya rağmen, hem ilan yayınlama deneyimini hem de yönetim paneli tarafındaki kontrol süreçlerini gerçek kullanım senaryolarına yakın olacak şekilde ele aldık.",
-                ],
-            },
-            {
-                title: "Ortaya Çıkan Değer",
-                content: [
-                    "Ortaya, emlak sektörüne yönelik modern bir portföy vitrini ile yönetim paneli deneyimini bir arada sunan güçlü bir demo çıktı.",
-                    "Bu çalışma, markalar için geliştirilebilecek ölçeklenebilir emlak çözümlerinin kullanıcı ve yönetim tarafında nasıl kurgulanabileceğini somut biçimde gösteriyor.",
                 ],
             },
         ],

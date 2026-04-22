@@ -51,8 +51,8 @@ function CounterValue({ value, suffix }: { value: number; suffix: string }) {
 }
 
 const LIGHTHOUSE_METRICS: Array<{ key: keyof LighthouseScores; label: string }> = [
-    { key: "performance", label: "Performance" },
-    { key: "accessibility", label: "Accessibility" },
+    { key: "performance", label: "Performans" },
+    { key: "accessibility", label: "Erişilebilirlik" },
     { key: "bestPractices", label: "Best Practices" },
     { key: "seo", label: "SEO" },
 ];
