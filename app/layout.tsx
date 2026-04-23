@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { DM_Sans, Syne } from 'next/font/google'
+import { Archivo, Syne } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { Navbar } from '@/components/navbar'
 import { CookieBanner } from '@/components/cookie-banner'
@@ -15,9 +15,9 @@ const defaultMetaDescription = 'Özel web tasarımı, yönetim panelleri ve SEO 
 const defaultOpenGraphImage = '/opengraph-image'
 const defaultTwitterImage = '/twitter-image'
 
-const dmSans = DM_Sans({
+const archivo = Archivo({
   subsets: ["latin", "latin-ext"],
-  variable: "--font-dm-sans",
+  variable: "--font-archivo",
   display: "swap",
 });
 
@@ -83,8 +83,8 @@ export default function RootLayout({
   const structuredData = [createOrganizationSchema(), createWebsiteSchema()]
 
   return (
-    <html lang="tr">
-      <body className={`${dmSans.className} ${dmSans.variable} ${syne.variable} antialiased bg-black`}>
+    <html lang="tr" className={`${archivo.variable} ${syne.variable}`}>
+      <body className={`${archivo.className} antialiased bg-black`}>
         <JsonLd id="site-structured-data" data={structuredData} />
         <Navbar />
         {children}
